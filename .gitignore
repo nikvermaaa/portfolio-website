@@ -1,0 +1,72 @@
+# ==============================================================================
+# Portfolio Repository .gitignore
+# ==============================================================================
+
+# OS Generated Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+.directory
+
+# Temporary, Cache & Local Scratch Files
+scratch/
+tmp/
+temp/
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*~
+
+# IDE & Code Editors
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.project
+.settings/
+
+# Environment Variables & Secrets
+.env
+.env.*
+*.env
+*.local
+*.pem
+*.key
+
+# Node & Package Artifacts
+node_modules/
+dist/
+build/
+.npm/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Python Cache & Virtual Environments
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+ENV/
+
+# Local Raw Media Dumps & Scratch Assets
+portfolio 2 part.mp4
+WhatsApp Image*
+image3.jpeg
+assets/stickers.png
+
+# Logs
+*.log
+logs/
