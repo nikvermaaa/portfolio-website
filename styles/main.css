@@ -1,0 +1,204 @@
+@import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Caveat:wght@500;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Patrick+Hand&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Silkscreen:wght@400;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+
+:root {
+  --font-pixel: 'Silkscreen', monospace;
+  --font-handwriting: 'Caveat', cursive;
+  --font-display-hand: 'Patrick Hand', 'Architects Daughter', cursive;
+  --font-serif: 'Newsreader', serif;
+  --font-mono: 'Space Mono', monospace;
+  --font-sans: 'Plus Jakarta Sans', sans-serif;
+  
+  --color-paper: #fbfbfa;
+  --color-grid-bg: #151820;
+  --color-grid-line: rgba(255, 255, 255, 0.07);
+  --color-rule-line: rgba(210, 215, 225, 0.5);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+  font-family: var(--font-sans);
+  background-color: var(--color-paper);
+  background-image: repeating-linear-gradient(
+    transparent,
+    transparent 31px,
+    var(--color-rule-line) 31px,
+    var(--color-rule-line) 32px
+  );
+  color: #1a1a1a;
+}
+
+/* Notebook Ruled Paper Container - Full Screen Width */
+.notebook-sheet {
+  width: 100%;
+  min-height: 100vh;
+  background-color: transparent;
+}
+
+/* Washi Tape Components */
+.washi-tape {
+  position: absolute;
+  height: 24px;
+  background: rgba(240, 238, 225, 0.75);
+  backdrop-filter: blur(2px);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+  border-left: 3px dashed rgba(180, 175, 160, 0.45);
+  border-right: 3px dashed rgba(180, 175, 160, 0.45);
+  z-index: 20;
+  pointer-events: none;
+}
+
+.tape-blue {
+  background: rgba(186, 215, 250, 0.78);
+}
+.tape-yellow {
+  background: rgba(254, 240, 138, 0.78);
+}
+.tape-pink {
+  background: rgba(251, 207, 232, 0.78);
+}
+
+/* Folder Tabs with Angled Chamfer */
+.folder-tab-chamfer {
+  clip-path: polygon(0 0, calc(100% - 24px) 0, 100% 100%, 0% 100%);
+}
+
+.folder-tab-chamfer-reverse {
+  clip-path: polygon(24px 0, 100% 0, 100% 100%, 0% 100%);
+}
+
+/* Vertical text for side docked tabs */
+.vertical-text {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+/* Rubber Stamp Styling */
+.rubber-stamp {
+  display: inline-block;
+  text-transform: uppercase;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  border-width: 2.5px;
+  border-style: solid;
+  border-radius: 4px;
+  padding: 4px 10px;
+  letter-spacing: 0.1em;
+  opacity: 0.85;
+  user-select: none;
+}
+
+/* Perforated Receipt Top/Bottom */
+.perforated-edge-top {
+  position: relative;
+}
+.perforated-edge-top::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background-image: radial-gradient(circle, transparent 4px, #FFFBEB 4.5px);
+  background-size: 16px 8px;
+  background-repeat: repeat-x;
+}
+
+/* Draggable document cards */
+.draggable-card {
+  touch-action: none;
+  cursor: grab;
+  transition: box-shadow 0.2s ease, transform 0.1s ease;
+}
+.draggable-card:active {
+  cursor: grabbing;
+}
+.draggable-card.is-dragging {
+  box-shadow: 0 25px 40px -10px rgba(0, 0, 0, 0.35) !important;
+  z-index: 999 !important;
+}
+
+.torn-paper-card {
+  background-color: #f4f4f5;
+  background-image: none;
+  box-shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.05);
+  position: relative;
+}
+
+.torn-top-edge {
+  mask-image: linear-gradient(to bottom, transparent 0, black 12px);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, black 12px);
+}
+
+/* Postage Stamp Border */
+.postage-stamp-border {
+  border: 2px dashed #e11d48;
+  background: #fff5f5;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Software App Icon Tiles */
+.software-tile {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-sans);
+  font-weight: 800;
+  font-size: 14px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transition: transform 0.15s ease;
+}
+.software-tile:hover {
+  transform: translateY(-2px) scale(1.05);
+}
+
+/* Paperclip 3D Shadow */
+.paperclip-shadow {
+  filter: drop-shadow(2px 3px 2px rgba(0, 0, 0, 0.25));
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+/* Interactive Pixel Art Stickers */
+.draggable-pixel-sticker {
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: grab;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.18));
+  transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.15s ease;
+}
+.draggable-pixel-sticker:hover {
+  filter: drop-shadow(0 8px 16px rgba(0,0,0,0.28));
+  transform: scale(1.08);
+}
+.draggable-pixel-sticker:active {
+  cursor: grabbing;
+}
