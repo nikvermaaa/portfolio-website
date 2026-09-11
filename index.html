@@ -507,29 +507,30 @@
   <div id="dossier-workspace-modal" class="fixed inset-0 bg-zinc-950/95 backdrop-blur-md z-[999] hidden flex-col transition-all duration-300 opacity-0 scale-95">
     
     <!-- Top Dossier Navigation Bar -->
-    <header class="h-16 border-b border-zinc-800 px-6 flex items-center justify-between bg-zinc-900/90 text-white select-none">
-      <div class="flex items-center gap-4">
-        <span id="dossier-header-badge" class="px-2.5 py-1 bg-amber-400 text-zinc-950 font-mono text-xs font-bold rounded uppercase tracking-wider">
+    <header class="h-14 sm:h-16 border-b border-zinc-800 px-3 sm:px-6 flex items-center justify-between bg-zinc-900/90 text-white select-none gap-2">
+      <div class="flex items-center gap-2.5 sm:gap-4 min-w-0">
+        <span id="dossier-header-badge" class="px-2 sm:px-2.5 py-0.5 sm:py-1 bg-amber-400 text-zinc-950 font-mono text-[10px] sm:text-xs font-bold rounded uppercase tracking-wider shrink-0">
           FILE #01
         </span>
-        <div>
-          <h2 id="dossier-header-title" class="font-serif text-xl font-bold text-zinc-100">
+        <div class="min-w-0">
+          <h2 id="dossier-header-title" class="font-serif text-base sm:text-xl font-bold text-zinc-100 truncate">
             Dossier Workspace
           </h2>
-          <p id="dossier-header-meta" class="font-mono text-[11px] text-zinc-400">
+          <p id="dossier-header-meta" class="font-mono text-[9px] sm:text-[11px] text-zinc-400 truncate">
             PRJ-2026 // 4 Active Case Studies
           </p>
         </div>
       </div>
 
-      <div class="flex items-center gap-4">
+      <div class="flex items-center gap-2 sm:gap-4 shrink-0">
         <div class="font-mono text-xs text-zinc-400 hidden md:flex items-center gap-2">
           <span class="inline-block w-2 h-2 rounded-full bg-emerald-400"></span>
           <span id="dossier-header-date">MAR 2, 2026</span>
         </div>
 
-        <button id="close-dossier-btn" class="px-4 py-1.5 rounded bg-zinc-800 hover:bg-zinc-700 text-white font-mono text-xs font-bold uppercase tracking-wider border border-zinc-700 transition-colors flex items-center gap-1.5">
-          <span>CLOSE [ESC]</span>
+        <button id="close-dossier-btn" class="px-2.5 sm:px-4 py-1 sm:py-1.5 rounded bg-zinc-800 hover:bg-zinc-700 text-white font-mono text-[10px] sm:text-xs font-bold uppercase tracking-wider border border-zinc-700 transition-colors flex items-center gap-1 sm:gap-1.5 cursor-pointer">
+          <span class="hidden sm:inline">CLOSE [ESC]</span>
+          <span class="sm:hidden">CLOSE</span>
           <span>✕</span>
         </button>
       </div>
@@ -595,6 +596,6 @@
   </div>
 
   <!-- JavaScript Modules -->
-  <script type="module" src="js/app.js?v=47"></script>
+  <script type="module" src="js/app.js?v=48"></script>
 </body>
 </html>
