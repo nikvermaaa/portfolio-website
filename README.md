@@ -4,7 +4,7 @@
 
 ---
 
-## 🌟 Overview
+##  Overview
 
 This portfolio combines creative design with high-performance front-end architecture. Built using **Vanilla JavaScript (ES Modules)** and **Tailwind CSS**, it delivers an engaging experience featuring:
 - A lined notebook paper landing experience with tape accents and interactive stickers.
@@ -14,18 +14,18 @@ This portfolio combines creative design with high-performance front-end architec
 
 ---
 
-## ✨ Key Features
+## Key Features
 
-- **📓 Realistic Notebook & Paper Theme**: Ruled line backgrounds, washi tape components, textured cards, and rubber stamp badges.
-- **🗂️ Classified Project Cabinet**: Staggered folder tabs with accordion hover previews for quick project index inspection.
-- **📂 Full-Screen Archival Workspace**: Dedicated case study reading modals rendered on notebook ruled stationery with tags, metrics, and GitHub / Instagram links.
-- **👾 Draggable Retro Pixel Stickers**: Interactive physics engine supporting smooth desktop mouse and mobile touch drag-and-drop interactions.
-- **⚡ Lightweight & Fast**: Zero heavy framework overhead; fast load times and clean DOM manipulation.
-- **📱 Fully Responsive**: Tailored layouts optimized for mobile, tablet, and widescreen desktop displays.
+- ** Realistic Notebook & Paper Theme**: Ruled line backgrounds, washi tape components, textured cards, and rubber stamp badges.
+- ** Classified Project Cabinet**: Staggered folder tabs with accordion hover previews for quick project index inspection.
+- ** Full-Screen Archival Workspace**: Dedicated case study reading modals rendered on notebook ruled stationery with tags, metrics, and GitHub / Instagram links.
+- ** Draggable Retro Pixel Stickers**: Interactive physics engine supporting smooth desktop mouse and mobile touch drag-and-drop interactions.
+- **⚡Lightweight & Fast**: Zero heavy framework overhead; fast load times and clean DOM manipulation.
+- ** Fully Responsive**: Tailored layouts optimized for mobile, tablet, and widescreen desktop displays.
 
 ---
 
-## 🚀 Projects Showcased
+##  Projects Showcased
 
 ### 💻 Technical Projects (`FILE #01`)
 1. **Video Scene Segmentation using Optimum N-Means Clustering** — Unsupervised computer vision segmentation pipeline mathematically deriving cluster counts without heuristic search over $k$.
@@ -52,7 +52,7 @@ This portfolio combines creative design with high-performance front-end architec
 
 ---
 
-## 📂 Project Structure
+##  Project Structure
 
 ```text
 porfolio/
@@ -74,7 +74,7 @@ porfolio/
 
 ---
 
-## 💻 Getting Started Locally
+##  Getting Started Locally
 
 1. **Clone the repository**:
    ```bash
@@ -92,14 +92,3 @@ porfolio/
      npx serve .
      ```
    - Or open `index.html` directly in your browser.
-
-3. **Visit**: `http://localhost:8000`
-
----
-
-## 📬 Contact & Connect
-
-- **Email**: [nikssvermaaa@gmail.com](mailto:nikssvermaaa@gmail.com)
-- **LinkedIn**: [linkedin.com/in/nikhil-verma-29746928a](https://www.linkedin.com/in/nikhil-verma-29746928a)
-- **GitHub**: [github.com/nikvermaaa](https://github.com/nikvermaaa)
-- **Instagram**: [@nikvermaaa](https://www.instagram.com/nikvermaaa) • [@storyybookkkk](https://www.instagram.com/storyybookkkk)
