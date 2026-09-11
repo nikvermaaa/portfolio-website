@@ -564,22 +564,23 @@
        style="background-color: #fbfbfa; background-image: repeating-linear-gradient(transparent, transparent 31px, rgba(210, 215, 225, 0.5) 31px, rgba(210, 215, 225, 0.5) 32px);">
     
     <!-- Top Bar -->
-    <div class="sticky top-0 z-50 bg-[#fbfbfa]/90 backdrop-blur-md border-b border-gray-300/80 px-4 sm:px-8 py-3.5 flex items-center justify-between">
-      <button id="back-to-projects-btn" class="px-3.5 py-1.5 rounded-md bg-white border border-zinc-800 text-zinc-900 font-mono text-xs font-bold uppercase tracking-wider hover:bg-zinc-900 hover:text-white transition-all shadow-sm flex items-center gap-1.5 cursor-pointer">
+    <div class="sticky top-0 z-50 bg-[#fbfbfa]/95 backdrop-blur-md border-b border-gray-300/80 px-2.5 sm:px-8 py-2 sm:py-3.5 flex items-center justify-between gap-1.5 sm:gap-4">
+      <button id="back-to-projects-btn" class="px-2 sm:px-3.5 py-1 sm:py-1.5 rounded-md bg-white border border-zinc-800 text-zinc-900 font-mono text-[10px] sm:text-xs font-bold uppercase tracking-wider hover:bg-zinc-900 hover:text-white transition-all shadow-sm flex items-center gap-1 sm:gap-1.5 shrink-0 cursor-pointer">
         <span>←</span>
-        <span>BACK TO PROJECTS</span>
+        <span class="hidden sm:inline">BACK TO PROJECTS</span>
+        <span class="sm:hidden">BACK</span>
       </button>
 
-      <div class="flex items-center gap-2">
-        <span id="project-detail-folder-badge" class="px-2.5 py-1 bg-amber-300 text-zinc-900 font-mono text-xs font-bold rounded uppercase tracking-wider">
+      <div class="flex items-center gap-1 sm:gap-2 min-w-0 overflow-hidden">
+        <span id="project-detail-folder-badge" class="px-1.5 sm:px-2.5 py-0.5 sm:py-1 text-[9px] sm:text-xs font-mono font-bold rounded uppercase tracking-wider truncate max-w-[85px] sm:max-w-none shrink">
           PROJECT
         </span>
-        <span id="project-detail-date" class="font-mono text-xs text-zinc-600 bg-white px-2.5 py-1 rounded border border-zinc-300">
+        <span id="project-detail-date" class="font-mono text-[9px] sm:text-xs text-zinc-600 bg-white px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded border border-zinc-300 truncate max-w-[85px] sm:max-w-none shrink">
           2026
         </span>
       </div>
 
-      <button id="close-project-detail-btn" class="w-8 h-8 rounded-full bg-white hover:bg-zinc-200 text-zinc-800 font-mono text-xs font-bold border border-zinc-300 flex items-center justify-center transition-colors">
+      <button id="close-project-detail-btn" class="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-white hover:bg-zinc-200 text-zinc-800 font-mono text-[10px] sm:text-xs font-bold border border-zinc-300 flex items-center justify-center transition-colors shrink-0 cursor-pointer">
         ✕
       </button>
     </div>
@@ -594,6 +595,6 @@
   </div>
 
   <!-- JavaScript Modules -->
-  <script type="module" src="js/app.js?v=45"></script>
+  <script type="module" src="js/app.js?v=46"></script>
 </body>
 </html>
