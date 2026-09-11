@@ -3,7 +3,7 @@ export const PORTFOLIO_DATA = {
     name: "NIKHIL",
     subtitle: "my name is",
     headline: "I build scalable full stack systems and agentic software.",
-    status: "OPEN TO NEW WORK AND GOOD PROBLEMS",
+    status: "OPEN TO NEW WORK AND SOLVING PROBLEMS",
     location: "Bengaluru, Karnataka",
     bio: "4th-year Engineering student with hands-on experience in end-to-end software development, distributed ML architectures/models, and web design. Actively developing my understanding of agentic workflows and RAG pipelines to design autonomous, context-aware Generative AI systems. Alongside that, I love spending my time doing graphic design and video editing.",
     skills: [
