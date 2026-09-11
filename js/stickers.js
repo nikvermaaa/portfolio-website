@@ -14,7 +14,6 @@ const PAGE_STICKER_LAYOUTS = {
   // IMAGE 1: HOME PAGE
   home: [
     { id: 'stk-dino', name: 'dino', xVw: 12.5, yVh: 27, rotate: -12, width: 78, alt: 'Pixel Dino' },
-    { id: 'stk-ipod', name: 'ipod_classic', xVw: 24, yVh: 19, rotate: -6, width: 66, alt: 'iPod Classic' },
     { id: 'stk-camera', name: 'camera', xVw: 90, yVh: 16, rotate: -8, width: 72, alt: 'Digital Camera' },
     { id: 'stk-hourglass', name: 'hourglass', xVw: 77, yVh: 19, rotate: -12, width: 64, alt: 'Hourglass' },
     { id: 'stk-check', name: 'clipboard_check', xVw: 4.5, yVh: 42, rotate: -5, width: 68, alt: 'Checklist Clipboard' },
@@ -25,12 +24,11 @@ const PAGE_STICKER_LAYOUTS = {
     { id: 'stk-mp3', name: 'mp3_player', xVw: 23, yVh: 73, rotate: 10, width: 62, alt: 'MP3 Player' },
     { id: 'stk-headphones', name: 'headphones', xVw: 62, yVh: 77, rotate: 6, width: 72, alt: 'Headphones' },
     { id: 'stk-start', name: 'start_button', xVw: 6, yVh: 78, rotate: -2, width: 92, alt: 'Start Button' },
-    { id: 'stk-bubble', name: 'speech_bubble', xVw: 80, yVh: 79, rotate: 2, width: 88, alt: 'Speech Bubble' }
+    { id: 'stk-ipod', name: 'ipod_classic', xVw: 80, yVh: 78, rotate: 6, width: 66, alt: 'iPod Classic' }
   ],
 
   // IMAGE 2: ABOUT PAGE
   about: [
-    { id: 'stk-ipod', name: 'ipod_classic', xVw: 3.5, yVh: 8, rotate: -8, width: 66, alt: 'iPod Classic' },
     { id: 'stk-star', name: 'star', xVw: 15, yVh: 18, rotate: 15, width: 66, alt: 'Pixel Star' },
     { id: 'stk-camera', name: 'camera', xVw: 90, yVh: 16, rotate: -8, width: 72, alt: 'Digital Camera' },
     { id: 'stk-alien', name: 'alien', xVw: 16, yVh: 51, rotate: 8, width: 70, alt: 'Pixel Alien' },
@@ -40,16 +38,14 @@ const PAGE_STICKER_LAYOUTS = {
     { id: 'stk-check', name: 'clipboard_check', xVw: 2.5, yVh: 77, rotate: -5, width: 68, alt: 'Checklist Clipboard' },
     { id: 'stk-mp3', name: 'mp3_player', xVw: 19, yVh: 73, rotate: 10, width: 62, alt: 'MP3 Player' },
     { id: 'stk-headphones', name: 'headphones', xVw: 62, yVh: 76, rotate: 6, width: 72, alt: 'Headphones' },
-    { id: 'stk-bubble', name: 'speech_bubble', xVw: 85, yVh: 81, rotate: 2, width: 88, alt: 'Speech Bubble' },
+    { id: 'stk-ipod', name: 'ipod_classic', xVw: 84, yVh: 80, rotate: 6, width: 66, alt: 'iPod Classic' },
     { id: 'stk-cd', name: 'cd_rom', xVw: 3.5, yVh: 64, rotate: -12, width: 78, alt: 'Holo CD' },
     { id: 'stk-start', name: 'start_button', xVw: 6, yVh: 86, rotate: -2, width: 92, alt: 'Start Button' }
   ],
 
   // IMAGE 3: DOSSIER FOLDERS PAGE
   folders: [
-    { id: 'stk-ipod', name: 'ipod_classic', xVw: 1.5, yVh: 9, rotate: -8, width: 66, alt: 'iPod Classic' },
     { id: 'stk-audit', name: 'clipboard_audit', xVw: 90, yVh: 17, rotate: 8, width: 68, alt: 'Audit Clipboard' },
-    { id: 'stk-bubble', name: 'speech_bubble', xVw: 80.5, yVh: 23.5, rotate: 2, width: 88, alt: 'Speech Bubble' },
     { id: 'stk-star', name: 'star', xVw: 7, yVh: 39, rotate: 16, width: 66, alt: 'Pixel Star' },
     { id: 'stk-headphones', name: 'headphones', xVw: 90.5, yVh: 48, rotate: 6, width: 72, alt: 'Headphones' },
     { id: 'stk-alien', name: 'alien', xVw: 13, yVh: 68, rotate: 8, width: 70, alt: 'Pixel Alien' },
@@ -58,6 +54,7 @@ const PAGE_STICKER_LAYOUTS = {
     { id: 'stk-check', name: 'clipboard_check', xVw: 2.5, yVh: 77, rotate: -5, width: 68, alt: 'Checklist Clipboard' },
     { id: 'stk-mp3', name: 'mp3_player', xVw: 22, yVh: 75, rotate: 10, width: 62, alt: 'MP3 Player' },
     { id: 'stk-camera', name: 'camera', xVw: 88, yVh: 78, rotate: -8, width: 72, alt: 'Digital Camera' },
+    { id: 'stk-ipod', name: 'ipod_classic', xVw: 80, yVh: 24, rotate: 4, width: 66, alt: 'iPod Classic' },
     { id: 'stk-cd', name: 'cd_rom', xVw: 4, yVh: 60, rotate: -12, width: 78, alt: 'Holo CD' },
     { id: 'stk-start', name: 'start_button', xVw: 6, yVh: 88, rotate: -2, width: 92, alt: 'Start Button' }
   ]
