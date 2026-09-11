@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nikhil — Developer Portfolio & Archival Dossier</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            pixel: ['Silkscreen', 'monospace'],
+            handwriting: ['Caveat', 'cursive'],
+            serif: ['Newsreader', 'serif'],
+            mono: ['Space Mono', 'monospace'],
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts & Custom Styles -->
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body class="min-h-screen w-full m-0 p-0 flex flex-col items-center">
+
+  <!-- ============================================================ -->
+  <!-- INTRO SPLASH OVERLAY ("Oh, hello there! -> You found me!")   -->
+  <!-- ============================================================ -->
+  <div id="intro-splash" class="fixed inset-0 z-[9999] flex items-center justify-center select-none cursor-pointer"
+       style="background-color: #fbfbfa; background-image: repeating-linear-gradient(transparent, transparent 31px, rgba(210, 215, 225, 0.5) 31px, rgba(210, 215, 225, 0.5) 32px); transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1), transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);">
+    <div id="intro-bubble" class="px-7 sm:px-9 py-3.5 sm:py-4 bg-[#FCC844] border-2 border-zinc-900 shadow-sm transform scale-95 opacity-0 transition-all duration-300"
+         style="border-radius: 14px 14px 14px 2px;">
+      <span id="intro-text" class="font-sans text-2xl sm:text-3xl md:text-4xl font-semibold text-zinc-900 tracking-tight block whitespace-nowrap transition-all duration-200">
+        Oh, hello there!
+      </span>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- MAIN FULL-SCREEN NOTEBOOK SHEET (Takes Whole Screen)          -->
+  <!-- ============================================================ -->
+  <main class="notebook-sheet w-full min-h-screen py-6 sm:py-8 px-4 sm:px-8 md:px-12 lg:px-20 relative overflow-hidden transition-all">
+    <div class="w-full max-w-6xl xl:max-w-7xl mx-auto">
+    
+    <!-- Top Navbar -->
+    <header class="relative z-50 flex items-center justify-between gap-2 sm:gap-4 pb-4 sm:pb-8 w-full">
+      <div class="flex items-center gap-1 sm:gap-2">
+        <nav id="top-navbar-links" class="flex items-center gap-0.5 sm:gap-1 bg-zinc-100/90 p-0.5 sm:p-1 rounded-full border border-zinc-300 text-[9px] sm:text-[11px] font-mono font-semibold">
+          <a href="#home" id="nav-btn-home" class="nav-item active-nav-pill px-2 sm:px-3 py-0.5 sm:py-1 rounded-full bg-amber-300 text-zinc-900 font-bold shadow-sm flex items-center gap-0.5 sm:gap-1 transition-all">
+            ★ HOME
+          </a>
+          <a href="#about" id="nav-btn-about" class="nav-item px-2 sm:px-3 py-0.5 sm:py-1 rounded-full hover:bg-zinc-200 text-zinc-700 font-medium transition-all">
+            ABOUT
+          </a>
+          <a href="#folders" id="nav-btn-folders" class="nav-item px-2 sm:px-3 py-0.5 sm:py-1 rounded-full hover:bg-zinc-200 text-zinc-700 font-medium transition-all">
+            PROJECT FOLDERS
+          </a>
+        </nav>
+      </div>
+
+      <div class="flex items-center gap-1.5 sm:gap-3 shrink-0">
+        <!-- Social Icons: 1. LinkedIn (Blue/White) -> 2. GitHub -> 3. Instagram -->
+        <div class="flex items-center gap-1 sm:gap-1.5">
+          <!-- 1. LinkedIn -->
+          <a id="nav-link-linkedin" href="#" target="_blank" rel="noopener noreferrer" title="LinkedIn" class="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-[#0A66C2] hover:scale-110 transition-transform flex items-center justify-center text-white shadow-sm p-1 sm:p-1.5 cursor-pointer">
+            <svg class="w-full h-full fill-current pointer-events-none" viewBox="0 0 24 24">
+              <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.2a1.65 1.65 0 0 0-1.66 1.66 1.66 1.66 0 0 0 1.66 1.65 1.65 1.65 0 0 0 1.65-1.65 1.65 1.65 0 0 0-1.65-1.66Z"/>
+            </svg>
+          </a>
+
+          <!-- 2. GitHub -->
+          <a id="nav-link-github" href="#" target="_blank" rel="noopener noreferrer" title="GitHub" class="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-[#181717] hover:scale-110 transition-transform flex items-center justify-center text-white shadow-sm p-1 sm:p-1.5 border border-zinc-700 cursor-pointer">
+            <svg class="w-full h-full fill-current pointer-events-none" viewBox="0 0 24 24">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+            </svg>
+          </a>
+
+          <!-- 3. Instagram -->
+          <a id="nav-link-instagram" href="#" target="_blank" rel="noopener noreferrer" title="Instagram" class="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600 hover:scale-110 transition-transform flex items-center justify-center text-white shadow-sm p-1 sm:p-1.5 cursor-pointer">
+            <svg class="w-full h-full pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+              <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
+            </svg>
+          </a>
+        </div>
+
+        <a id="nav-contact-btn" href="#" class="px-2 sm:px-3.5 py-0.5 sm:py-1 text-[10px] sm:text-xs font-mono font-bold uppercase rounded-md bg-white border border-zinc-800 shadow-sm hover:bg-zinc-900 hover:text-white transition-all flex items-center gap-1 shrink-0 cursor-pointer whitespace-nowrap">
+          ♥ CONTACT
+        </a>
+      </div>
+    </header>
+
+    <!-- ============================================================ -->
+    <!-- 1. HOME VIEW (Initial Landing Page)                           -->
+    <!-- ============================================================ -->
+    <section id="view-home" class="page-view flex flex-col items-center justify-center text-center relative py-8 min-h-[calc(100vh-130px)] select-none transition-all duration-300">
+      
+      <!-- Main Hero Header Box Container with Corner Stickies & Connecting Arrows -->
+      <div class="relative my-10 sm:my-14 inline-block w-[min(92vw,350px)] sm:w-auto">
+        
+        <!-- Top Center: "my name is" -->
+        <div class="absolute -top-7 sm:-top-7 left-1/2 -translate-x-1/2 font-handwriting text-base sm:text-xl text-zinc-600 whitespace-nowrap z-20 pointer-events-none select-none">
+          my name is
+        </div>
+
+        <!-- 1. TOP-LEFT CORNER: Tag + Arrow pointing into corner -->
+        <div class="absolute -top-7 sm:-top-9 -left-2 sm:-left-12 z-20 flex items-center pointer-events-none select-none">
+          <span class="px-2 sm:px-3 py-0.5 rounded-full bg-emerald-100 border border-emerald-300 text-emerald-800 font-mono text-[8px] sm:text-[10px] font-bold transform -rotate-3 shadow-sm uppercase whitespace-nowrap pointer-events-auto tracking-tight sm:tracking-normal">
+            SOFTWARE AND DESIGN
+          </span>
+          <!-- Arrow pointing down-right towards corner -->
+          <svg class="w-4 h-4 sm:w-7 sm:h-7 text-zinc-800 -ml-0.5 sm:-ml-1 mt-1 sm:mt-2 transform rotate-6" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 8 L24 24" />
+            <path d="M14 24 L24 24 L24 14" />
+          </svg>
+        </div>
+
+        <!-- 2. TOP-RIGHT CORNER: Arrow + Tag pointing into corner -->
+        <div class="absolute -top-7 sm:-top-9 -right-2 sm:-right-12 z-20 flex items-center pointer-events-none select-none">
+          <!-- Arrow pointing down-left towards corner -->
+          <svg class="w-4 h-4 sm:w-7 sm:h-7 text-zinc-800 -mr-0.5 sm:-mr-1 mt-1 sm:mt-2 transform -rotate-6" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M26 8 L8 24" />
+            <path d="M18 24 L8 24 L8 14" />
+          </svg>
+          <span class="px-2 sm:px-3 py-0.5 rounded-full bg-amber-100 border border-amber-300 text-amber-800 font-mono text-[8px] sm:text-[10px] font-bold transform rotate-3 shadow-sm uppercase whitespace-nowrap pointer-events-auto tracking-tight sm:tracking-normal">
+            LOVES TO RESEARCH
+          </span>
+        </div>
+
+        <!-- 3. BOTTOM-LEFT CORNER: Tag + Arrow pointing into corner -->
+        <div class="absolute -bottom-7 sm:-bottom-9 -left-2 sm:-left-12 z-20 flex items-center pointer-events-none select-none">
+          <span class="px-2.5 sm:px-3.5 py-0.5 sm:py-1 rounded bg-amber-200 text-amber-900 font-handwriting text-sm sm:text-base font-bold transform -rotate-6 shadow-md whitespace-nowrap pointer-events-auto">
+            Software Engineer
+          </span>
+          <!-- Arrow emerging from behind/beside tag pointing up-right into bottom-left corner -->
+          <svg class="w-4 h-4 sm:w-7 sm:h-7 text-zinc-800 -ml-0.5 sm:-ml-1 -mt-1 sm:-mt-2 transform -rotate-6" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 24 L24 8" />
+            <path d="M14 8 L24 8 L24 18" />
+          </svg>
+        </div>
+
+        <!-- 4. BOTTOM-RIGHT CORNER: Arrow + Tag pointing into corner -->
+        <div class="absolute -bottom-7 sm:-bottom-9 -right-2 sm:-right-12 z-20 flex items-center pointer-events-none select-none">
+          <!-- Arrow emerging from behind/beside tag pointing up-left into bottom-right corner -->
+          <svg class="w-4 h-4 sm:w-7 sm:h-7 text-zinc-800 -mr-0.5 sm:-mr-1 -mt-1 sm:-mt-2 transform rotate-6" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M26 24 L8 8" />
+            <path d="M18 8 L8 8 L8 18" />
+          </svg>
+          <span class="px-2.5 sm:px-3.5 py-0.5 sm:py-1 rounded bg-cyan-100 text-cyan-900 font-handwriting text-sm sm:text-base font-bold transform rotate-6 shadow-md whitespace-nowrap pointer-events-auto">
+            India
+          </span>
+        </div>
+
+        <!-- Main Pixel Art Name Box (Orange Marker Frame) -->
+        <div class="px-6 sm:px-14 py-4 sm:py-6 border-2 border-orange-400/90 rounded-lg bg-white/50 shadow-sm relative z-10 flex items-center justify-center">
+          <h1 id="hero-name" class="font-pixel text-4xl sm:text-6xl md:text-7xl font-bold tracking-widest text-zinc-900 select-none">
+            NIKHIL
+          </h1>
+
+          <!-- Floating Tape Accents -->
+          <div class="washi-tape tape-yellow w-14 sm:w-16 -top-3 left-4 -rotate-6"></div>
+          <div class="washi-tape tape-blue w-14 sm:w-16 -bottom-3 right-4 rotate-3"></div>
+        </div>
+
+      </div>
+
+      <!-- Center Status Pill: "● OPEN TO NEW WORK AND GOOD PROBLEMS" -->
+      <div class="flex items-center justify-center mt-2 text-xs font-mono">
+        <span class="px-4 py-1.5 rounded-full bg-white border border-zinc-300 text-zinc-800 flex items-center gap-2 shadow-sm font-medium">
+          <span class="w-2 h-2 rounded-full bg-blue-600 inline-block"></span>
+          OPEN TO NEW WORK AND GOOD PROBLEMS
+        </span>
+      </div>
+
+      <!-- Main Headline -->
+      <h2 id="hero-headline" class="font-sans text-2xl sm:text-3xl md:text-4xl font-extrabold text-zinc-900 mt-8 max-w-2xl leading-tight">
+        I build scalable full stack systems and agentic software.
+      </h2>
+
+      <!-- Page Switch Button to Folders -->
+      <div class="mt-8 flex items-center gap-3">
+        <button onclick="window.switchView('about')" class="px-5 py-2.5 rounded-md bg-white border border-zinc-800 text-zinc-900 font-mono text-xs font-bold uppercase tracking-wider hover:bg-zinc-100 transition-all shadow-sm flex items-center gap-1.5 cursor-pointer">
+          <span>ABOUT ME</span>
+          <span>→</span>
+        </button>
+        <button onclick="window.switchView('folders')" class="px-6 py-2.5 rounded-md bg-zinc-900 text-white font-mono text-xs font-bold uppercase tracking-wider hover:bg-zinc-800 hover:scale-105 transition-all shadow-md flex items-center gap-1.5 cursor-pointer">
+          <span>EXPLORE FOLDERS</span>
+          <span>→</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- 2. ABOUT ME VIEW (Only shown when clicking ABOUT)            -->
+    <!-- ============================================================ -->
+    <section id="view-about" class="page-view hidden py-8 relative transition-all duration-300">
+      
+      <!-- Top Title Tag -->
+      <div class="mb-4 px-2 flex justify-between items-end">
+        <div>
+          <span class="font-mono text-xs uppercase tracking-widest text-zinc-800 font-bold block">NIKHIL</span>
+          <span class="font-mono text-[10px] uppercase tracking-wider text-zinc-500">FULL-STACK & AI SOFTWARE ENGINEER</span>
+        </div>
+        <span class="font-mono text-[10px] text-zinc-500 bg-white/80 px-3 py-1 rounded border border-zinc-300 shadow-sm font-semibold">
+          PAGE // ABOUT_ME
+        </span>
+      </div>
+
+      <!-- Main Torn Paper Sheet Container (Horizontal Layout) -->
+      <div class="torn-paper-card rounded-xl p-6 sm:p-8 md:p-10 border border-zinc-300 shadow-2xl relative overflow-hidden bg-[#f4f4f5]">
+        
+        <!-- Horizontal Grid across the paper card -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start relative z-10">
+          
+          <!-- ========================================== -->
+          <!-- 1. LEFT: Hey, guy! & Bio Intro             -->
+          <!-- ========================================== -->
+          <div class="lg:col-span-5 flex flex-col justify-between pr-0 lg:pr-6 lg:border-r border-zinc-300/70 relative">
+            <div>
+              <!-- Starburst Sticker (Blue & Yellow) -->
+              <div class="absolute -top-3 right-2 text-2xl transform rotate-12 select-none hover:scale-110 transition-transform">
+                <svg width="34" height="34" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M20 0L24.5 13.5L38.5 9L29 20L38.5 31L24.5 26.5L20 40L15.5 26.5L1.5 31L11 20L1.5 9L15.5 13.5L20 0Z" fill="#3B82F6" stroke="#FBBF24" stroke-width="2"/>
+                </svg>
+              </div>
+
+              <h3 class="font-serif text-3xl lg:text-4xl font-bold text-zinc-900 tracking-wide">
+                Hey, guy!
+              </h3>
+              
+              <p class="font-sans text-xs sm:text-sm text-zinc-800 leading-relaxed mt-3">
+                I'm <strong>Nikhil</strong> — a 4th-year Engineering student with hands-on experience in end-to-end software development, distributed ML architectures/models, and web design.
+              </p>
+              
+              <p class="font-sans text-xs text-zinc-600 leading-relaxed mt-2.5">
+                Actively developing my understanding of agentic workflows and RAG pipelines to design autonomous, context-aware Generative AI systems.
+              </p>
+
+              <p class="font-sans text-xs text-zinc-600 leading-relaxed mt-2.5">
+                Alongside that, I love spending my time doing graphic design and video editing.
+              </p>
+            </div>
+
+            <!-- Contact & Social Pills -->
+            <div class="mt-6 pt-4 border-t border-zinc-300/70 flex flex-wrap items-center gap-2">
+              <a id="about-email-link" href="#" class="px-3 py-1 bg-zinc-900 text-white font-mono text-xs rounded-md shadow-sm font-bold hover:bg-zinc-800 transition-colors">
+                ✉️ nikssvermaaa@gmail.com
+              </a>
+              <span id="about-location-pill" class="px-3 py-1 bg-white text-zinc-700 border border-zinc-300 font-mono text-xs rounded-md shadow-sm font-medium">
+                📍 Bengaluru, Karnataka
+              </span>
+            </div>
+          </div>
+
+          <!-- ========================================== -->
+          <!-- 2. RIGHT: Education & Tech Stack           -->
+          <!-- ========================================== -->
+          <div class="lg:col-span-7 flex flex-col justify-between space-y-6">
+            
+            <!-- Education -->
+            <div class="relative">
+              <h4 class="font-serif text-2xl lg:text-3xl font-bold text-zinc-900 uppercase tracking-wide">
+                EDUCATION
+              </h4>
+              <div class="mt-2 space-y-2.5">
+                <!-- Sir MVIT -->
+                <div class="bg-white p-3.5 rounded-lg border border-zinc-200 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                  <div>
+                    <p class="font-sans text-xs font-bold text-zinc-900">Sir M. Visvesvaraya Institute of Technology (Sir MVIT)</p>
+                    <p class="font-sans text-[11px] text-zinc-600">Bachelor of Engineering (B.E.) in Information Science and Engineering</p>
+                    <p class="font-mono text-[11px] text-emerald-700 font-semibold mt-0.5">Bengaluru, Karnataka</p>
+                  </div>
+                  <span class="font-mono text-xs font-bold text-zinc-800 bg-zinc-100 px-2.5 py-1 rounded border border-zinc-300 self-start sm:self-auto shrink-0">
+                    08/2023 – Present
+                  </span>
+                </div>
+
+                <!-- St. Anne's High School -->
+                <div class="bg-white p-3 rounded-lg border border-zinc-200 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                  <div>
+                    <p class="font-sans text-xs font-bold text-zinc-900">St. Anne's High School</p>
+                    <p class="font-sans text-[11px] text-zinc-600">Higher Secondary Education (12th Grade)</p>
+                    <p class="font-mono text-[11px] text-emerald-700 font-semibold mt-0.5">Patna, Bihar</p>
+                  </div>
+                  <span class="font-mono text-xs font-bold text-zinc-600 bg-zinc-100 px-2.5 py-1 rounded border border-zinc-300 self-start sm:self-auto shrink-0">
+                    2020 – 2022
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tech Stack (Starts with Java, Python in the middle) -->
+            <div class="relative pt-2 border-t border-zinc-300/70">
+              <!-- Yellow Starburst Sticker -->
+              <div class="absolute -top-2 right-0 text-xl transform rotate-45 select-none hover:scale-110 transition-transform">
+                <svg width="30" height="30" viewBox="0 0 40 40" fill="none">
+                  <path d="M20 0L24 14L38 12L28 22L36 34L22 28L18 40L14 26L0 28L8 18L2 7L16 12L20 0Z" fill="#FACC15" stroke="#2563EB" stroke-width="2"/>
+                </svg>
+              </div>
+
+              <h4 class="font-serif text-2xl lg:text-3xl font-bold text-zinc-900 uppercase tracking-wide">
+                TECH STACK
+              </h4>
+              
+              <!-- Clean Text Tags: Starts with Java, Python in the middle -->
+              <div class="flex flex-wrap items-center gap-2 mt-3 font-mono text-xs">
+                <!-- 1. Java (Start) -->
+                <span class="px-3.5 py-1.5 rounded-md bg-amber-100 text-amber-950 font-bold border border-amber-300 shadow-sm hover:scale-105 transition-transform cursor-default">
+                  Java
+                </span>
+                
+                <!-- 2. JavaScript -->
+                <span class="px-3.5 py-1.5 rounded-md bg-yellow-100 text-yellow-950 font-bold border border-yellow-300 shadow-sm hover:scale-105 transition-transform cursor-default">
+                  JavaScript
+                </span>
+                
+                <!-- 3. React.js (Vite) / Next.js -->
+                <span class="px-3.5 py-1.5 rounded-md bg-blue-100 text-blue-950 font-bold border border-blue-300 shadow-sm hover:scale-105 transition-transform cursor-default">
+                  React.js / Next.js
+                </span>
+                
+                <!-- 4. Python (In the middle) -->
+                <span class="px-4 py-1.5 rounded-md bg-amber-200 text-amber-950 font-extrabold border-2 border-amber-400 shadow-md hover:scale-105 transition-transform cursor-default ring-2 ring-amber-300/40">
+                  Python
+                </span>
+                
+                <!-- 5. FastAPI -->
+                <span class="px-3.5 py-1.5 rounded-md bg-emerald-100 text-emerald-950 font-bold border border-emerald-300 shadow-sm hover:scale-105 transition-transform cursor-default">
+                  FastAPI
+                </span>
+                
+                <!-- 6. LangChain / LangGraph -->
+                <span class="px-3.5 py-1.5 rounded-md bg-indigo-100 text-indigo-950 font-bold border border-indigo-300 shadow-sm hover:scale-105 transition-transform cursor-default">
+                  LangChain / LangGraph
+                </span>
+                
+                <!-- 7. PyTorch / Deep Learning -->
+                <span class="px-3.5 py-1.5 rounded-md bg-sky-100 text-sky-950 font-bold border border-sky-300 shadow-sm hover:scale-105 transition-transform cursor-default">
+                  PyTorch / ML
+                </span>
+
+                <!-- 8. SQL / MongoDB -->
+                <span class="px-3.5 py-1.5 rounded-md bg-teal-100 text-teal-950 font-bold border border-teal-300 shadow-sm hover:scale-105 transition-transform cursor-default">
+                  SQL / MongoDB
+                </span>
+
+                <!-- 9. Tailwind CSS -->
+                <span class="px-3.5 py-1.5 rounded-md bg-cyan-100 text-cyan-950 font-bold border border-cyan-300 shadow-sm hover:scale-105 transition-transform cursor-default">
+                  Tailwind CSS
+                </span>
+              </div>
+            </div>
+
+          </div>
+
+      </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- 3. DOSSIER FOLDERS VIEW (Only shown when clicking DOSSIER)   -->
+    <!-- ============================================================ -->
+    <section id="view-folders" class="page-view hidden py-8 relative transition-all duration-300">
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <span class="font-mono text-xs uppercase text-zinc-500 tracking-wider">Classified Material // Recovered Files</span>
+          <h2 class="font-serif text-3xl font-bold text-zinc-900">Classified / Project Cabinet</h2>
+        </div>
+        <div class="font-mono text-xs text-zinc-600 bg-white px-3 py-1.5 rounded border border-zinc-300 shadow-sm hidden sm:block">
+          HOVER TAB TO PREVIEW • CLICK TO EXPAND
+        </div>
+      </div>
+
+      <!-- Folder Tab Accordion Container -->
+      <div id="folder-cabinet-tabs" class="space-y-3">
+        <!-- Generated dynamically via app.js -->
+      </div>
+
+      <!-- Editorial Contact Section -->
+      <div id="contact-editorial-section" class="mt-20 pt-12 border-t border-zinc-300 relative">
+        
+        <!-- Main 2-Column Editorial Layout -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 xl:gap-20 items-start">
+          
+          <!-- LEFT: Uppercase Typography "CONTACT ME" in Grey -->
+          <div class="lg:col-span-4 flex flex-col justify-start">
+            <h2 class="font-sans font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight text-zinc-400 leading-[0.95] uppercase select-none">
+              CONTACT<br/>ME
+            </h2>
+            <div class="mt-4 font-mono text-[10px] text-zinc-400 tracking-wider flex items-center gap-2">
+              <span class="w-6 h-[1.5px] bg-zinc-400"></span>
+              <span>GET IN TOUCH</span>
+            </div>
+          </div>
+
+          <!-- RIGHT: Editorial Contact Details & Intent -->
+          <div class="lg:col-span-8 space-y-6">
+            
+            <div>
+              <h3 class="font-sans font-black text-2xl sm:text-3xl text-zinc-900 tracking-tight uppercase">
+                NIKHIL VERMA
+              </h3>
+              <p class="font-sans text-sm sm:text-base text-zinc-700 mt-2.5 leading-relaxed max-w-2xl">
+                I'm actively looking to work on projects related to <strong>Full Stack</strong>, <strong>Machine Learning</strong>, and <strong>Agentic AI</strong>. If you've gone through my portfolio and would like to connect or collaborate, feel free to reach out directly!
+              </p>
+            </div>
+
+            <!-- 2-Subcolumn Metadata Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-5 border-t border-zinc-200">
+              
+              <!-- Subcol 1: Focus & Directions -->
+              <div class="space-y-4">
+                <div>
+                  <span class="font-mono text-[10px] font-bold uppercase tracking-wider text-zinc-500 block mb-1">
+                    THE FOCUS // WORK AREAS
+                  </span>
+                  <p class="font-sans text-xs text-zinc-700 leading-relaxed font-medium">
+                    • Full-Stack Web Development<br/>
+                    • Agentic AI & RAG Workflows<br/>
+                    • Machine Learning & Computer Vision
+                  </p>
+                </div>
+
+                <div>
+                  <div class="flex items-center gap-2">
+                    <span class="font-mono text-[10px] font-bold uppercase tracking-wider text-zinc-500">
+                      DIRECTIONS
+                    </span>
+                    <span class="w-6 h-[1.5px] bg-zinc-400"></span>
+                  </div>
+                  <p class="font-sans text-xs text-zinc-600 mt-1">
+                    Open for Full-Time Roles, Internships & Collaborations.
+                  </p>
+                </div>
+
+                <div class="pt-2">
+                  <a href="https://mail.google.com/mail/?view=cm&fs=1&to=nikssvermaaa@gmail.com" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-2.5 bg-zinc-900 hover:bg-zinc-800 text-white font-mono text-xs font-bold uppercase tracking-wider rounded transition-all shadow-md hover:scale-[1.02] cursor-pointer">
+                    <span>GET IN TOUCH</span>
+                    <span>→</span>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Subcol 2: Email & Social Channels -->
+              <div class="space-y-4 sm:border-l sm:border-zinc-200 sm:pl-6">
+                <div>
+                  <span class="font-mono text-[10px] font-bold uppercase tracking-wider text-zinc-500 block mb-1">
+                    EMAIL
+                  </span>
+                  <div class="flex items-center gap-2 flex-wrap">
+                    <a href="mailto:nikssvermaaa@gmail.com" class="font-mono text-xs sm:text-sm text-zinc-900 font-bold hover:text-zinc-600 transition-colors underline decoration-zinc-400 hover:decoration-zinc-800">
+                      nikssvermaaa@gmail.com
+                    </a>
+                    <button onclick="navigator.clipboard.writeText('nikssvermaaa@gmail.com').then(() => { this.innerText = 'COPIED!'; setTimeout(() => this.innerText = 'COPY', 2000); })" class="px-2 py-0.5 text-[9px] font-mono font-bold uppercase bg-zinc-200 hover:bg-zinc-300 text-zinc-800 rounded border border-zinc-300 transition-colors cursor-pointer">
+                      COPY
+                    </button>
+                  </div>
+                </div>
+
+                <div>
+                  <span class="font-mono text-[10px] font-bold uppercase tracking-wider text-zinc-500 block mb-1">
+                    SOCIAL
+                  </span>
+                  <div class="flex items-center gap-2 font-mono text-xs font-bold text-zinc-800">
+                    <a href="https://www.linkedin.com/in/nikhil-verma-29746928a" target="_blank" rel="noopener noreferrer" class="hover:text-zinc-500 transition-colors underline decoration-zinc-300">LI</a>
+                    <span class="text-zinc-300">/</span>
+                    <a href="https://github.com/nikvermaaa" target="_blank" rel="noopener noreferrer" class="hover:text-zinc-500 transition-colors underline decoration-zinc-300">GH</a>
+                    <span class="text-zinc-300">/</span>
+                    <a href="https://www.instagram.com/nikvermaaa" target="_blank" rel="noopener noreferrer" class="hover:text-zinc-500 transition-colors underline decoration-zinc-300">IG</a>
+                    <span class="text-zinc-300">/</span>
+                    <a href="https://www.instagram.com/storyybookkkk" target="_blank" rel="noopener noreferrer" class="hover:text-zinc-500 transition-colors underline decoration-zinc-300">ART</a>
+                  </div>
+                </div>
+
+                <div>
+                  <span class="font-mono text-[10px] font-bold uppercase tracking-wider text-zinc-500 block mb-1">
+                    LOCATION
+                  </span>
+                  <p class="font-sans text-xs text-zinc-700">
+                    Bengaluru, Karnataka, India
+                  </p>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    </div><!-- End max-w container -->
+  </main>
+
+  <!-- ============================================================ -->
+  <!-- FULL ARCHIVAL DOSSIER WORKSPACE (Phase 2 from Reference Video)-->
+  <!-- ============================================================ -->
+  <div id="dossier-workspace-modal" class="fixed inset-0 bg-zinc-950/95 backdrop-blur-md z-[999] hidden flex-col transition-all duration-300 opacity-0 scale-95">
+    
+    <!-- Top Dossier Navigation Bar -->
+    <header class="h-16 border-b border-zinc-800 px-6 flex items-center justify-between bg-zinc-900/90 text-white select-none">
+      <div class="flex items-center gap-4">
+        <span id="dossier-header-badge" class="px-2.5 py-1 bg-amber-400 text-zinc-950 font-mono text-xs font-bold rounded uppercase tracking-wider">
+          FILE #01
+        </span>
+        <div>
+          <h2 id="dossier-header-title" class="font-serif text-xl font-bold text-zinc-100">
+            Dossier Workspace
+          </h2>
+          <p id="dossier-header-meta" class="font-mono text-[11px] text-zinc-400">
+            PRJ-2026 // 4 Active Case Studies
+          </p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-4">
+        <div class="font-mono text-xs text-zinc-400 hidden md:flex items-center gap-2">
+          <span class="inline-block w-2 h-2 rounded-full bg-emerald-400"></span>
+          <span id="dossier-header-date">MAR 2, 2026</span>
+        </div>
+
+        <button id="close-dossier-btn" class="px-4 py-1.5 rounded bg-zinc-800 hover:bg-zinc-700 text-white font-mono text-xs font-bold uppercase tracking-wider border border-zinc-700 transition-colors flex items-center gap-1.5">
+          <span>CLOSE [ESC]</span>
+          <span>✕</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Workspace Main Body with Docked Side Tabs and Draggable Canvas -->
+    <div class="flex-1 relative flex overflow-hidden">
+      
+      <!-- Interactive Draggable Document Canvas Area -->
+      <div id="dossier-canvas" class="flex-1 relative overflow-auto p-8 bg-[#181a20] bg-[radial-gradient(#ffffff0a_1px,transparent_1px)] [background-size:24px_24px]">
+        <!-- Draggable document cards populated via dossier.js -->
+      </div>
+
+      <!-- Docked Vertical Folder Tabs on Right Edge (Matches Video 00:06-00:13) -->
+      <aside id="dossier-docked-tabs" class="w-14 bg-zinc-900 border-l border-zinc-800 flex flex-col items-center py-4 gap-3 z-30 shadow-2xl">
+        <!-- Docked tabs populated via dossier.js -->
+      </aside>
+
+    </div>
+
+    <!-- Bottom Status Bar -->
+    <footer class="h-8 border-t border-zinc-800 px-6 bg-zinc-900/90 text-zinc-400 font-mono text-[11px] flex items-center justify-between select-none">
+      <span>💡 TIP: Click and drag any document sheet or receipt to reposition on your workspace desk</span>
+      <span>ARCHIVAL SYSTEM v2.4</span>
+    </footer>
+
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- DETAILED PROJECT VIEW MODAL (Same Notebook Paper Background) -->
+  <!-- ============================================================ -->
+  <div id="project-detail-modal" class="fixed inset-0 z-[1050] hidden flex-col transition-all duration-300 opacity-0 scale-95 overflow-y-auto"
+       style="background-color: #fbfbfa; background-image: repeating-linear-gradient(transparent, transparent 31px, rgba(210, 215, 225, 0.5) 31px, rgba(210, 215, 225, 0.5) 32px);">
+    
+    <!-- Top Bar -->
+    <div class="sticky top-0 z-50 bg-[#fbfbfa]/90 backdrop-blur-md border-b border-gray-300/80 px-4 sm:px-8 py-3.5 flex items-center justify-between">
+      <button id="back-to-projects-btn" class="px-3.5 py-1.5 rounded-md bg-white border border-zinc-800 text-zinc-900 font-mono text-xs font-bold uppercase tracking-wider hover:bg-zinc-900 hover:text-white transition-all shadow-sm flex items-center gap-1.5 cursor-pointer">
+        <span>←</span>
+        <span>BACK TO PROJECTS</span>
+      </button>
+
+      <div class="flex items-center gap-2">
+        <span id="project-detail-folder-badge" class="px-2.5 py-1 bg-amber-300 text-zinc-900 font-mono text-xs font-bold rounded uppercase tracking-wider">
+          PROJECT
+        </span>
+        <span id="project-detail-date" class="font-mono text-xs text-zinc-600 bg-white px-2.5 py-1 rounded border border-zinc-300">
+          2026
+        </span>
+      </div>
+
+      <button id="close-project-detail-btn" class="w-8 h-8 rounded-full bg-white hover:bg-zinc-200 text-zinc-800 font-mono text-xs font-bold border border-zinc-300 flex items-center justify-center transition-colors">
+        ✕
+      </button>
+    </div>
+
+    <!-- Main Project Content Reading Area -->
+    <div class="max-w-3xl mx-auto w-full py-8 sm:py-12 px-5 sm:px-8">
+      <div id="project-detail-content" class="space-y-6">
+        <!-- Injected dynamically via dossier.js -->
+      </div>
+    </div>
+
+  </div>
+
+  <!-- JavaScript Modules -->
+  <script type="module" src="js/app.js?v=44"></script>
+</body>
+</html>
