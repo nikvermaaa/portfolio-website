@@ -251,7 +251,7 @@ function renderFolderCabinet() {
       <!-- Tab Header Bar -->
       <div class="folder-tab-header flex items-center justify-between p-3 sm:p-4 gap-2 sm:gap-3 cursor-pointer select-none transition-colors group-hover:brightness-105">
         <div class="flex items-center gap-2 sm:gap-3 min-w-0">
-          <span class="folder-tab-chamfer font-mono text-[10px] sm:text-xs font-bold px-2 sm:px-3 py-1 rounded-t-sm uppercase tracking-wider shrink-0 whitespace-nowrap ${chamferClass}">
+          <span class="folder-tab-chamfer font-mono text-[10px] sm:text-xs font-bold pl-2.5 sm:pl-3 pr-7 sm:pr-8 py-1 rounded-t-sm uppercase tracking-wider shrink-0 whitespace-nowrap ${chamferClass}">
             ${folder.badge}
           </span>
           <h3 class="font-serif text-sm sm:text-lg md:text-xl font-bold tracking-wide whitespace-nowrap truncate" style="color: ${folder.textColor}">
