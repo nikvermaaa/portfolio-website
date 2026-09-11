@@ -262,8 +262,8 @@ export const PORTFOLIO_DATA = {
       textColor: "#FFFFFF",
       tabTitle: "VIDEO EDITING & MOTION",
       metadata: {
-        code: "EDIT-2026",
-        date: "ACTIVE",
+        code: "EDIT-2025-PRESENT",
+        date: "2025 – PRESENT",
         itemsCount: "4 Project Folders",
         status: "Show Ready",
         summary: "visual storytelling and different art forms"
