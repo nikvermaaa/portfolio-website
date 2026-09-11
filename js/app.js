@@ -249,21 +249,21 @@ function renderFolderCabinet() {
 
     tabWrapper.innerHTML = `
       <!-- Tab Header Bar -->
-      <div class="folder-tab-header flex items-center justify-between p-4 cursor-pointer select-none transition-colors group-hover:brightness-105">
-        <div class="flex items-center gap-3">
-          <span class="folder-tab-chamfer font-mono text-xs font-bold px-3 py-1 rounded-t-sm uppercase tracking-wider ${chamferClass}">
+      <div class="folder-tab-header flex items-center justify-between p-3 sm:p-4 gap-2 sm:gap-3 cursor-pointer select-none transition-colors group-hover:brightness-105">
+        <div class="flex items-center gap-2 sm:gap-3 min-w-0">
+          <span class="folder-tab-chamfer font-mono text-[10px] sm:text-xs font-bold px-2 sm:px-3 py-1 rounded-t-sm uppercase tracking-wider shrink-0 whitespace-nowrap ${chamferClass}">
             ${folder.badge}
           </span>
-          <h3 class="font-serif text-lg md:text-xl font-bold tracking-wide" style="color: ${folder.textColor}">
+          <h3 class="font-serif text-sm sm:text-lg md:text-xl font-bold tracking-wide whitespace-nowrap truncate" style="color: ${folder.textColor}">
             ${folder.name}
           </h3>
         </div>
 
-        <div class="flex items-center gap-3">
+        <div class="flex items-center gap-2 sm:gap-3 shrink-0">
           <span class="font-mono text-xs opacity-80 hidden sm:inline font-medium" style="color: ${folder.textColor}">
             ${folder.metadata.date}
           </span>
-          <button class="open-folder-btn px-3 py-1 text-xs font-mono font-bold rounded uppercase tracking-wider transition-all ${btnClass}">
+          <button class="open-folder-btn px-2 sm:px-3 py-1 text-[10px] sm:text-xs font-mono font-bold rounded uppercase tracking-wider whitespace-nowrap shrink-0 transition-all ${btnClass}">
             OPEN FOLDER ↗
           </button>
         </div>
