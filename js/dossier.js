@@ -340,7 +340,7 @@ export function openProjectDetail(project, folder) {
       <div class="flex flex-wrap gap-2 pt-2">
         ${project.tags.map(t => `
           <span class="px-3 py-1 rounded-full bg-white border border-zinc-300 text-zinc-800 font-mono text-xs font-semibold shadow-xs">
-            #${t}
+            ${t}
           </span>
         `).join('')}
       </div>
