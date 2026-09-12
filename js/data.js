@@ -5,7 +5,7 @@ export const PORTFOLIO_DATA = {
     headline: "I build scalable full stack systems and agentic software.",
     status: "OPEN TO NEW WORK AND SOLVING PROBLEMS",
     location: "Bengaluru, Karnataka",
-    bio: "I'm Nikhil, a final-year engineering student who loves to learn through projects I make and spend time designing things. These days, I spend most of my time working on full-stack projects and playing with machine learning models. I have a great interest in agentic AI software, which is something I'm currently trying to understand more and striving to get a better grasp on. In my free time, I mostly watch movies or try to capture my thoughts through storytelling visuals.",
+    bio: "I'm Nikhil, a final-year engineering student who loves to learn while making projects and spend time designing things. These days, I spend most of my time working on full-stack projects and playing with machine learning models. I have a great interest in agentic AI software, which is something I'm currently trying to understand more and striving to get a better grasp on. In my free time, I mostly watch movies or try to capture my thoughts through storytelling visuals.",
     skills: [
       { name: "Java", color: "bg-[#FED7AA] text-[#9A3412] border-[#F97316]" },
       { name: "JavaScript", color: "bg-[#FEF08A] text-[#854D0E] border-[#EAB308]" },
