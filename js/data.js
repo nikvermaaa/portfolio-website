@@ -29,7 +29,8 @@ export const PORTFOLIO_DATA = {
   folders: [
     {
       id: "tec-projects",
-      name: "Tec Projects",
+      name: "Technical Projects",
+      mobileName: "Tech Projects",
       badge: "FILE #01",
       color: "#18181B", // Black/Charcoal
       accentColor: "#F59E0B",

@@ -255,7 +255,7 @@ function renderFolderCabinet() {
             ${folder.badge}
           </span>
           <h3 class="font-serif text-sm sm:text-lg md:text-xl font-bold tracking-wide whitespace-nowrap truncate" style="color: ${folder.textColor}">
-            ${folder.name}
+            ${folder.mobileName ? `<span class="sm:hidden">${folder.mobileName}</span><span class="hidden sm:inline">${folder.name}</span>` : folder.name}
           </h3>
         </div>
 

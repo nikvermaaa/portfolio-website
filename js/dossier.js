@@ -155,7 +155,9 @@ function renderFolderDocuments(folder) {
     gridWrapper.innerHTML = `
       <div class="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-zinc-700/60 pb-4">
         <div>
-          <h3 class="text-white font-serif text-xl sm:text-2xl font-bold tracking-tight">${folder.name}</h3>
+          <h3 class="text-white font-serif text-xl sm:text-2xl font-bold tracking-tight">
+            ${folder.mobileName ? `<span class="sm:hidden">${folder.mobileName}</span><span class="hidden sm:inline">${folder.name}</span>` : folder.name}
+          </h3>
           <p class="text-zinc-400 text-xs sm:text-sm font-sans mt-0.5">${folder.metadata.summary || 'Click any project folder below to open full details & case study.'}</p>
         </div>
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded bg-zinc-800 border border-zinc-700 text-zinc-300 font-mono text-xs">
@@ -178,14 +180,14 @@ function renderFolderDocuments(folder) {
 
       card.innerHTML = `
         <!-- Top Folder Tab Notch and Indicator -->
-        <div class="flex items-center justify-between mb-3">
-          <div class="flex items-center gap-2">
-            <span class="w-4 h-4 rounded-sm border-2 border-current/70 flex items-center justify-center text-[10px] font-mono">▫</span>
-            <span class="font-mono text-[10px] uppercase font-bold tracking-wider opacity-85 px-2 py-0.5 rounded bg-black/15">
+        <div class="flex items-start justify-between gap-3 sm:gap-4 mb-3">
+          <div class="flex items-center gap-1.5 shrink min-w-0">
+            <span class="w-4 h-4 rounded-sm border-2 border-current/70 flex items-center justify-center text-[10px] font-mono shrink-0">▫</span>
+            <span class="font-mono text-[10px] uppercase font-bold tracking-wider opacity-90 px-2 py-0.5 rounded bg-black/15 whitespace-nowrap">
               ${proj.tags && proj.tags[0] ? proj.tags[0] : 'PROJECT'}
             </span>
           </div>
-          <span class="font-mono text-[11px] opacity-75 font-semibold">${proj.date || '2026'}</span>
+          <span class="font-mono text-[11px] opacity-75 font-semibold shrink-0 text-right whitespace-nowrap pl-2 pt-0.5">${proj.date || '2026'}</span>
         </div>
 
         <!-- Project Titles -->
@@ -301,7 +303,8 @@ export function openProjectDetail(project, folder) {
   isDetailModalOpen = true;
 
   if (projectDetailBadge) {
-    projectDetailBadge.textContent = folder ? folder.name : 'PROJECT';
+    const isMobile = window.innerWidth < 640;
+    projectDetailBadge.textContent = folder ? (isMobile && folder.mobileName ? folder.mobileName : folder.name) : 'PROJECT';
     projectDetailBadge.style.backgroundColor = project.color || '#E76239';
     projectDetailBadge.style.color = project.textColor || '#FFFFFF';
   }
