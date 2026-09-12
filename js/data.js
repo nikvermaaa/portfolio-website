@@ -48,7 +48,7 @@ export const PORTFOLIO_DATA = {
           id: "proj-video-scene-segmentation",
           title: "Video Scene Segmentation using Optimum N-Means Clustering",
           subtitle: "what's right now • Video scene-segmentation pipeline using ONM clustering",
-          date: "July/2026 – Present",
+          date: "Present",
           color: "#E76239", // Warm Terracotta
           textColor: "#FFFFFF",
           tags: ["WHAT'S RIGHT NOW", "Python", "OpenCV", "NumPy", "SciPy", "scikit-image", "scikit-learn"],
