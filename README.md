@@ -41,4 +41,3 @@ This portfolio combines creative design with high-performance front-end architec
      ```bash
      npx serve .
      ```
-   - Or open `index.html` directly in your browser.
