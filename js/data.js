@@ -8,14 +8,24 @@ export const PORTFOLIO_DATA = {
     bio: "I'm Nikhil, a final-year engineering student who loves to learn while making projects and spend time designing things. These days, I spend most of my time working on full-stack projects and playing with machine learning models. I have a great interest in agentic AI software, which is something I'm currently trying to understand more and striving to get a better grasp on. In my free time, I mostly watch movies or try to capture my thoughts through storytelling visuals.",
     skills: [
       { name: "Java", color: "bg-[#FED7AA] text-[#9A3412] border-[#F97316]" },
+      { name: "SQL", color: "bg-[#DBEAFE] text-[#1E40AF] border-[#3B82F6]" },
+      { name: "C", color: "bg-[#E4E4E7] text-[#18181B] border-[#71717A]" },
       { name: "JavaScript", color: "bg-[#FEF08A] text-[#854D0E] border-[#EAB308]" },
-      { name: "React.js / Next.js", color: "bg-[#93C5FD] text-[#1E3A8A] border-[#3B82F6]" },
       { name: "Python", color: "bg-[#FFE866] text-[#6B5200] border-[#E6CD33]" },
-      { name: "FastAPI", color: "bg-[#34D399] text-[#065F46] border-[#059669]" },
-      { name: "LangChain / LangGraph", color: "bg-[#F472B6] text-[#831843] border-[#DB2777]" },
-      { name: "PyTorch / ML", color: "bg-[#FECDD3] text-[#9F1239] border-[#F43F5E]" },
-      { name: "SQL / MongoDB", color: "bg-[#A7F3D0] text-[#065F46] border-[#10B981]" },
-      { name: "Tailwind CSS", color: "bg-[#CFFAFE] text-[#155E75] border-[#06B6D4]" }
+      { name: "FastAPI", color: "bg-[#D1FAE5] text-[#065F46] border-[#10B981]" },
+      { name: "React.js", color: "bg-[#BAE6FD] text-[#0369A1] border-[#0EA5E9]" },
+      { name: "Redux Toolkit", color: "bg-[#F3E8FF] text-[#6B21A8] border-[#A855F7]" },
+      { name: "Tailwind CSS", color: "bg-[#CFFAFE] text-[#155E75] border-[#06B6D4]" },
+      { name: "HTML5 / CSS3", color: "bg-[#FFEDD5] text-[#9A3412] border-[#F97316]" },
+      { name: "RDBMS / MongoDB", color: "bg-[#CCFBF1] text-[#115E59] border-[#14B8A6]" },
+      { name: "SQLAlchemy ORM", color: "bg-[#FFE4E6] text-[#9F1239] border-[#F43F5E]" },
+      { name: "MQTT", color: "bg-[#EDE9FE] text-[#5B21B6] border-[#8B5CF6]" },
+      { name: "REST APIs", color: "bg-[#E0E7FF] text-[#3730A3] border-[#6366F1]" },
+      { name: "NumPy", color: "bg-[#E0F2FE] text-[#0369A1] border-[#38BDF8]" },
+      { name: "Pandas", color: "bg-[#EDE9FE] text-[#5B21B6] border-[#8B5CF6]" },
+      { name: "Scikit-learn", color: "bg-[#FEF3C7] text-[#92400E] border-[#F59E0B]" },
+      { name: "PyTorch", color: "bg-[#FFE4E6] text-[#9F1239] border-[#F43F5E]" },
+      { name: "OpenCV", color: "bg-[#D1FAE5] text-[#065F46] border-[#10B981]" }
     ]
   },
   

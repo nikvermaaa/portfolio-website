@@ -9,6 +9,7 @@ function initApp() {
   renderFolderCabinet();
   initDossier();
   initInteractiveStickers();
+  initDirectContactForm();
 }
 
 let splashInitialized = false;
@@ -193,6 +194,7 @@ function initScrapbook() {
         const contactSection = document.getElementById('contact-editorial-section');
         if (contactSection) {
           contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          document.getElementById('contact-name')?.focus();
         }
       }, 150);
     });
@@ -303,3 +305,78 @@ function renderFolderCabinet() {
     cabinetContainer.appendChild(tabWrapper);
   });
 }
+
+function initDirectContactForm() {
+  const form = document.getElementById('direct-email-form');
+  if (!form) return;
+
+  const submitBtn = document.getElementById('contact-submit-btn');
+  const btnText = document.getElementById('contact-btn-text');
+  const btnArrow = document.getElementById('contact-btn-arrow');
+  const statusMsg = document.getElementById('contact-status-msg');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const name = document.getElementById('contact-name')?.value.trim();
+    const email = document.getElementById('contact-email')?.value.trim();
+    const message = document.getElementById('contact-message')?.value.trim();
+
+    if (!name || !email || !message) return;
+
+    if (submitBtn) submitBtn.disabled = true;
+    if (btnText) btnText.textContent = 'SENDING...';
+    if (btnArrow) btnArrow.textContent = '';
+    if (statusMsg) {
+      statusMsg.className = 'hidden';
+      statusMsg.textContent = '';
+    }
+
+    try {
+      const response = await fetch('https://formsubmit.co/ajax/nikssvermaaa@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          name: name,
+          email: email,
+          message: message,
+          _subject: `New Portfolio Message from ${name}`,
+          _template: 'table',
+          _captcha: 'false'
+        })
+      });
+
+      const data = await response.json();
+
+      if (response.ok && (data.success === 'true' || data.success === true || response.status === 200)) {
+        if (statusMsg) {
+          statusMsg.className = 'p-2.5 rounded-md font-mono text-xs text-center bg-emerald-50 text-emerald-800 border border-emerald-300 block';
+          statusMsg.innerHTML = '✓ Message sent directly to Nikhil! I will get back to you soon.';
+        }
+        form.reset();
+        if (btnText) btnText.textContent = 'SENT SUCCESSFULLY';
+        if (btnArrow) btnArrow.textContent = '✓';
+      } else {
+        throw new Error(data.message || 'Failed to send message');
+      }
+    } catch (err) {
+      console.error('Contact form error:', err);
+      if (statusMsg) {
+        statusMsg.className = 'p-2.5 rounded-md font-mono text-xs text-center bg-red-50 text-red-800 border border-red-300 block';
+        statusMsg.innerHTML = '⚠️ Could not send message. Please email directly at <a href="mailto:nikssvermaaa@gmail.com" class="underline font-bold">nikssvermaaa@gmail.com</a>';
+      }
+      if (btnText) btnText.textContent = 'TRY AGAIN';
+      if (btnArrow) btnArrow.textContent = '→';
+    } finally {
+      setTimeout(() => {
+        if (submitBtn) submitBtn.disabled = false;
+        if (btnText) btnText.textContent = 'SEND MESSAGE';
+        if (btnArrow) btnArrow.textContent = '→';
+      }, 4000);
+    }
+  });
+}
+
