@@ -23,6 +23,12 @@ function initIntroSplash() {
   const textEl = document.getElementById('intro-text');
   if (!splash || !bubble || !textEl) return;
 
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('nosplash') === 'true') {
+    splash.style.display = 'none';
+    return;
+  }
+
   // 1. Initial State: Display "Oh, hello there!"
   textEl.textContent = "Oh, hello there!";
   setTimeout(() => {
@@ -130,8 +136,13 @@ function initNavbar() {
     });
   });
 
-  // Load initial view based on URL hash (default to 'home')
-  const initialHash = window.location.hash.replace('#', '');
+  // Load initial view based on URL parameter or hash (default to 'home')
+  const urlParams = new URLSearchParams(window.location.search);
+  const paramView = urlParams.get('view');
+  const initialHash = (paramView && ['home', 'about', 'folders'].includes(paramView))
+    ? paramView
+    : window.location.hash.replace('#', '');
+
   if (['home', 'about', 'folders'].includes(initialHash)) {
     switchView(initialHash);
   } else {
