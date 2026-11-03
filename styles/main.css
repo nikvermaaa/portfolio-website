@@ -503,13 +503,13 @@ html, body {
 .bio-content strong,
 .bio-content b,
 .bio-emphasis {
-  font-weight: 480 !important;
-  color: #27272a;
+  font-weight: 400 !important;
+  color: inherit;
 }
 
 .bio-name-accent {
-  font-weight: 480 !important;
-  color: #27272a;
+  font-weight: 400 !important;
+  color: inherit;
   text-decoration: underline wavy #2d6a4f;
   text-underline-offset: 4px;
 }
