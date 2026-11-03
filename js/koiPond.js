@@ -267,6 +267,137 @@ void main(){
   o = vec4(col, 1.);
 }`;
 
+function isMobileDevice() {
+  return /Android|iPhone|iPad|iPod|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+    || (window.innerWidth < 768 && ('ontouchstart' in window || navigator.maxTouchPoints > 0));
+}
+
+/* Pre-baked organic seabed & squircle feathered border (runs ONCE on resize to save mobile GPU) */
+const BAKE_BED_FS = `#version 300 es
+precision highp float;
+in vec2 vUv;
+out vec4 o;
+uniform vec2 uRes;
+
+float hash21(vec2 p){
+  p = fract(p * vec2(123.34, 456.21));
+  p += dot(p, p + 45.32);
+  return fract(p.x * p.y);
+}
+
+float vnoise(vec2 p){
+  vec2 i = floor(p), f = fract(p);
+  f = f * f * (3. - 2. * f);
+  return mix(mix(hash21(i), hash21(i + vec2(1,0)), f.x),
+             mix(hash21(i + vec2(0,1)), hash21(i + vec2(1,1)), f.x), f.y);
+}
+
+float fbm(vec2 p){
+  float a = .5, s = 0.;
+  for(int i = 0; i < 3; i++){
+    s += a * vnoise(p);
+    p = p * 2.03 + 17.1;
+    a *= .5;
+  }
+  return s;
+}
+
+void main(){
+  float asp = uRes.x / uRes.y;
+  vec2 pp = vUv * vec2(asp, 1.);
+
+  // 1. Natural underwater sand ripples
+  vec2 sCoord = pp * 14.0;
+  float sWander = vnoise(pp * 2.5 + 3.1) * 1.8 + vnoise(pp * 5.0 + 8.2) * 0.7;
+  float sAxis = sCoord.x * 0.72 + sCoord.y * 0.58 + sWander;
+  float sandWave = sin(sAxis * 3.14159);
+  sandWave = sign(sandWave) * pow(abs(sandWave), 0.75);
+
+  // 2. Tactile sediment granularity
+  float sandGrit1 = vnoise(pp * 34.0 + vec2(7.3, 3.1));
+  float sandGrit2 = vnoise(pp * 68.0 + vec2(1.9, 8.5));
+  float sandGrit = (sandGrit1 * 0.65 + sandGrit2 * 0.35 - 0.5) * 0.28;
+
+  // 3. Ultra-fine micro sand specks
+  vec2 grainCoord = floor(vUv * uRes * 0.4);
+  float microSand = (hash21(grainCoord + 13.9) - 0.5) * 0.16;
+
+  // 4. Organic seabed depth, mineral & silt mottling
+  float bl = .55 * fbm(pp * 2.2 + 3.1) + .45 * fbm(pp * 5.0 + 8.7);
+  float siltPatch = vnoise(pp * 3.0 + 11.7) * 0.6 + vnoise(pp * 6.5 + 4.2) * 0.4;
+
+  vec3 bedDeep  = vec3(.032, .135, .110);
+  vec3 bedMid   = vec3(.095, .285, .225);
+  vec3 bedSand  = vec3(.175, .410, .305);
+  vec3 bedOlive = vec3(.190, .365, .245);
+
+  vec3 col = mix(bedDeep, bedMid, smoothstep(.22, .68, bl));
+  col = mix(col, bedSand, smoothstep(.38, .76, bl) * 0.5);
+  col = mix(col, bedOlive, smoothstep(.48, .82, siltPatch) * 0.35);
+
+  float seaTexture = sandWave * 0.13 + sandGrit + microSand;
+  col *= 1.0 + seaTexture;
+
+  // Gentle sunlight falloff on the pond bed
+  vec2 sd = (vUv - vec2(.5, .5)) * vec2(1.1, 1.5);
+  float sun = exp(-dot(sd, sd) * 1.4);
+  col *= .86 + .2 * sun;
+  col *= vec3(.96, 1.05, 1.);
+
+  // Organic squircle border feathered edge
+  vec2 p_px = vUv * uRes;
+  vec2 halfSize = uRes * 0.5;
+  float minDim = min(uRes.x, uRes.y);
+  float margin = minDim * 0.035;
+  vec2 boxHalf = halfSize - margin;
+  float corner = minDim * 0.15;
+  float feather = minDim * 0.13;
+  vec2 q_edge = abs(p_px - halfSize) - (boxHalf - corner);
+  float inside = corner - length(max(q_edge, 0.0)) - min(max(q_edge.x, q_edge.y), 0.0);
+  float wander = vnoise(vUv * 8.0) * 0.65 + vnoise(vUv * 20.0 + 8.3) * 0.35;
+  inside -= clamp(wander * 0.5 + 0.5, 0.0, 1.0) * feather * 0.22;
+
+  float edgeAlpha = pow(smoothstep(0.0, 1.0, clamp(inside / feather, 0.0, 1.0)), 1.3);
+
+  o = vec4(col, edgeAlpha);
+}
+`;
+
+/* Ultra-lightweight 60 FPS mobile fragment shader (0 noise calls, zero tile desync) */
+const FIN_MOBILE_FS = COMMON + `
+uniform sampler2D uScene, uCaus, uBed;
+
+void main(){
+  float asp = uRes.x / uRes.y;
+  vec2 p = vUv * vec2(asp, 1.);
+  vec2 g = ripple(p);
+  vec2 uvp = vUv + g * 0.008;
+
+  // 1. Fetch pre-baked organic seabed (RGB) and feathered border alpha (A)
+  vec4 bed = texture(uBed, uvp);
+
+  // 2. Fetch fish & dynamic scene elements
+  vec4 s = texture(uScene, uvp);
+  vec3 col = mix(bed.rgb, s.rgb, s.a);
+  col = mix(col, col * vec3(.85, 1., .9), s.a * .25);
+
+  // 3. Water surface normal and lighting
+  vec3 n = normalize(vec3(-g * .3, 1.));
+  col *= .92 + (dot(n, normalize(vec3(-.4, .5, .75))) - .75) * .6;
+  col += vec3(.7, .9, .85) * min(.05, length(g) * .02);
+
+  // 4. Subtle caustic web from uCaus
+  float cs = texture(uCaus, uvp).r;
+  col += vec3(.85, 1., .92) * cs * 0.18 * mix(1., .3, s.a);
+
+  // 5. Feathered edge dissolve to page paper color (#fafafa)
+  vec3 paperCol = vec3(0.98039);
+  col = mix(paperCol, col, bed.a);
+
+  o = vec4(col, 1.);
+}
+`;
+
 let P = {}, tex, fb = {};
 
 function sh(type, src) {
@@ -317,8 +448,17 @@ function glInit() {
   P.caus = mkProg(CAUS_FS);
   P.blur = mkProg(BLUR_FS);
   P.fin = mkProg(FIN_FS);
+  P.bakeBed = mkProg(BAKE_BED_FS);
+  P.finMobile = mkProg(FIN_MOBILE_FS);
   tex = mkTex(0, 0);
   gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+}
+
+function bakeBedTexture() {
+  if (!gl || !fb.bed || !P.bakeBed) return;
+  use(P.bakeBed, fb.bed);
+  gl.uniform2f(Uc(P.bakeBed, 'uRes'), cv.width, cv.height);
+  gl.drawArrays(gl.TRIANGLES, 0, 3);
 }
 
 function glSize() {
@@ -328,11 +468,17 @@ function glSize() {
       gl.deleteFramebuffer(fb[k].f);
     }
   }
+  fb = {};
   const w = Math.ceil(cv.width / 2);
   const h = Math.ceil(cv.height / 2);
   fb.c = mkFB(w, h);
   fb.p = mkFB(w, h);
   fb.q = mkFB(w, h);
+
+  if (isMobileDevice()) {
+    fb.bed = mkFB(cv.width, cv.height);
+    bakeBedTexture();
+  }
 
   // Pre-allocate scene texture GPU storage once on resize (zero reallocation during rendering)
   if (tex) {
@@ -372,36 +518,57 @@ function render() {
   if (gl) {
     bind(0, tex);
     gl.texSubImage2D(gl.TEXTURE_2D, 0, 0, 0, gl.RGBA, gl.UNSIGNED_BYTE, S);
-    use(P.caus, fb.c);
-    common(P.caus);
-    gl.uniform2f(Uc(P.caus, 'uCS'), CFG.causticScale * 120 * DK, CFG.causticScale * 50 * DK);
-    gl.uniform1f(Uc(P.caus, 'uCT'), T * CFG.causticSpeed * 6.2831);
-    gl.drawArrays(gl.TRIANGLES, 0, 3);
 
-    use(P.blur, fb.p);
-    bind(1, fb.c.t);
-    gl.uniform1i(Uc(P.blur, 'uTex'), 1);
-    gl.uniform2f(Uc(P.blur, 'uDir'), 1 / fb.c.w, 0);
-    gl.drawArrays(gl.TRIANGLES, 0, 3);
+    if (isMobileDevice() && fb.bed) {
+      // 1. Fast single caustics pass on half-res FBO
+      use(P.caus, fb.c);
+      common(P.caus);
+      gl.uniform2f(Uc(P.caus, 'uCS'), CFG.causticScale * 120 * DK, CFG.causticScale * 50 * DK);
+      gl.uniform1f(Uc(P.caus, 'uCT'), T * CFG.causticSpeed * 6.2831);
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
 
-    use(P.blur, fb.q);
-    bind(1, fb.p.t);
-    gl.uniform2f(Uc(P.blur, 'uDir'), 0, 1 / fb.c.h);
-    gl.drawArrays(gl.TRIANGLES, 0, 3);
+      // 2. Ultra-lightweight direct composite to canvas using pre-baked bed (0 live noise calls)
+      use(P.finMobile, null);
+      common(P.finMobile);
+      bind(0, tex);
+      bind(1, fb.c.t);
+      bind(2, fb.bed.t);
+      gl.uniform1i(Uc(P.finMobile, 'uScene'), 0);
+      gl.uniform1i(Uc(P.finMobile, 'uCaus'), 1);
+      gl.uniform1i(Uc(P.finMobile, 'uBed'), 2);
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+    } else {
+      use(P.caus, fb.c);
+      common(P.caus);
+      gl.uniform2f(Uc(P.caus, 'uCS'), CFG.causticScale * 120 * DK, CFG.causticScale * 50 * DK);
+      gl.uniform1f(Uc(P.caus, 'uCT'), T * CFG.causticSpeed * 6.2831);
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
 
-    use(P.fin, null);
-    common(P.fin);
-    bind(0, tex);
-    bind(1, fb.c.t);
-    bind(2, fb.q.t);
-    gl.uniform1i(Uc(P.fin, 'uScene'), 0);
-    gl.uniform1i(Uc(P.fin, 'uCaus'), 1);
-    gl.uniform1i(Uc(P.fin, 'uBloom'), 2);
-    gl.uniform1f(Uc(P.fin, 'uRefr'), CFG.refraction);
-    gl.uniform1f(Uc(P.fin, 'uGlow'), CFG.glow);
-    gl.uniform1f(Uc(P.fin, 'uGrain'), CFG.grain);
-    gl.uniform1f(Uc(P.fin, 'uCStr'), CFG.causticStrength);
-    gl.drawArrays(gl.TRIANGLES, 0, 3);
+      use(P.blur, fb.p);
+      bind(1, fb.c.t);
+      gl.uniform1i(Uc(P.blur, 'uTex'), 1);
+      gl.uniform2f(Uc(P.blur, 'uDir'), 1 / fb.c.w, 0);
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+
+      use(P.blur, fb.q);
+      bind(1, fb.p.t);
+      gl.uniform2f(Uc(P.blur, 'uDir'), 0, 1 / fb.c.h);
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+
+      use(P.fin, null);
+      common(P.fin);
+      bind(0, tex);
+      bind(1, fb.c.t);
+      bind(2, fb.q.t);
+      gl.uniform1i(Uc(P.fin, 'uScene'), 0);
+      gl.uniform1i(Uc(P.fin, 'uCaus'), 1);
+      gl.uniform1i(Uc(P.fin, 'uBloom'), 2);
+      gl.uniform1f(Uc(P.fin, 'uRefr'), CFG.refraction);
+      gl.uniform1f(Uc(P.fin, 'uGlow'), CFG.glow);
+      gl.uniform1f(Uc(P.fin, 'uGrain'), CFG.grain);
+      gl.uniform1f(Uc(P.fin, 'uCStr'), CFG.causticStrength);
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+    }
   } else if (ctx2d) {
     ctx2d.clearRect(0, 0, cv.width, cv.height);
     const grad = ctx2d.createRadialGradient(
@@ -423,7 +590,7 @@ function resizeSimulation() {
   if (!cv) return;
   const r = cv.getBoundingClientRect();
   if (r.width === 0 || r.height === 0) return;
-  const isMobile = window.innerWidth < 768;
+  const isMobile = isMobileDevice();
   const maxDPR = isMobile ? 1.0 : 1.25;
   const k = Math.min(window.devicePixelRatio || 1, maxDPR, Math.sqrt(900000 / (r.width * r.height)));
   cv.width = Math.round(r.width * k);
@@ -1352,7 +1519,7 @@ export function initKoiPond(canvasId = 'koi-canvas', hintId = 'koi-hint') {
 
   if (!force2d) {
     try {
-      gl = cv.getContext('webgl2', { antialias: false, alpha: false, preserveDrawingBuffer: true });
+      gl = cv.getContext('webgl2', { antialias: false, alpha: false, preserveDrawingBuffer: false, powerPreference: 'high-performance' });
       if (gl) {
         glInit();
       }

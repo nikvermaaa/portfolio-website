@@ -1,7 +1,7 @@
 import { PORTFOLIO_DATA } from './data.js?v=99';
 import { initDossier, openFolderDossier } from './dossier.js?v=95';
 import { initInteractiveStickers } from './stickers.js?v=71';
-import { initKoiPond, pauseKoiPond, resumeKoiPond } from './koiPond.js';
+import { initKoiPond, pauseKoiPond, resumeKoiPond } from './koiPond.js?v=2';
 import { initMathMotion } from './mathMotion.js?v=4';
 
 window.pauseKoiPond = pauseKoiPond;
