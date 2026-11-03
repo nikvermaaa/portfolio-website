@@ -271,7 +271,9 @@ function initScrapbook() {
   }
 
   if (aboutEmail && links?.email) {
-    aboutEmail.href = `mailto:${links.email}`;
+    aboutEmail.href = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(links.email)}`;
+    aboutEmail.target = '_blank';
+    aboutEmail.rel = 'noopener noreferrer';
     aboutEmail.textContent = links.email;
   }
   if (aboutLocation && profile?.location) {
