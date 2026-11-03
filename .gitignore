@@ -61,11 +61,21 @@ venv/
 .venv/
 ENV/
 
-# Local Raw Media Dumps & Scratch Assets
+# User Reference Files, Media & Scratch Demos
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.webm
 portfolio 2 part.mp4
 WhatsApp Image*
 image3.jpeg
 assets/stickers.png
+resume.tex
+*.tex
+*.pdf
+*.ref
+*.ref.*
 
 # Logs
 *.log

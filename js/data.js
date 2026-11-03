@@ -5,7 +5,7 @@ export const PORTFOLIO_DATA = {
     headline: "I build scalable full stack systems and agentic software.",
     status: "OPEN TO NEW WORK AND SOLVING PROBLEMS",
     location: "Bengaluru, Karnataka",
-    bio: "I'm Nikhil, a final-year engineering student who loves to learn while making projects and spend time designing things. These days, I spend most of my time working on full-stack projects and playing with machine learning models. I have a great interest in agentic AI software, which is something I'm currently trying to understand more and striving to get a better grasp on. In my free time, I mostly watch movies or try to capture my thoughts through storytelling visuals.",
+    bio: "I'm Nikhil, a developer who learns mostly through the projects I work on, which are usually related to problems I face or see people & businesses facing in their work. These days, I spend most of my time working on full-stack projects and playing with machine learning models. I have a great interest in agentic AI software, which is something I'm currently trying to understand more and striving to get a better grasp on. In my free time, I mostly watch movies or try to capture my thoughts through storytelling visuals.",
     skills: [
       { name: "Java", color: "bg-[#FED7AA] text-[#9A3412] border-[#F97316]" },
       { name: "SQL", color: "bg-[#DBEAFE] text-[#1E40AF] border-[#3B82F6]" },
@@ -30,7 +30,7 @@ export const PORTFOLIO_DATA = {
   },
   
   links: {
-    email: "nikssvermaaa@gmail.com",
+    email: "nikhilv129@gmail.com",
     linkedin: "https://www.linkedin.com/in/nikhil-verma-29746928a",
     github: "https://github.com/nikvermaaa",
     instagram: "https://www.instagram.com/nikvermaaa"
@@ -39,228 +39,80 @@ export const PORTFOLIO_DATA = {
   folders: [
     {
       id: "tec-projects",
-      name: "Technical Projects",
-      mobileName: "Tech Projects",
+      name: "Project",
+      mobileName: "Project",
       badge: "FILE #01",
       color: "#18181B", // Black/Charcoal
       accentColor: "#F59E0B",
       textColor: "#FFFFFF",
-      tabTitle: "TECHNICAL PROJECTS",
+      tabTitle: "PROJECTS",
       metadata: {
-        code: "TEC-PRJ-2026-PRESENT",
-        date: "2026 – PRESENT",
-        itemsCount: "6 Project Folders",
+        code: "TEC-PRJ-2026",
+        date: "2026",
+        itemsCount: "5 Projects",
         status: "Production Ready",
         summary: "full stack - agentic ai - machine learning"
       },
       projects: [
         {
+          id: "proj-quickdrop",
+          title: "QuickDrop",
+          date: "Oct 2026 – Nov 2026",
+          githubUrl: "https://github.com/nikvermaaa/Quickdrop",
+          stack: "FastAPI, PostgreSQL, SQLAlchemy, Docker, Python",
+          oneLiner: "An automated dispute resolution desk that handles driver payout issues and complaints via Telegram and WhatsApp, validates claims against company policies, automates settlements, and escalates complex cases to managers.",
+          iconBg: "transparent",
+          iconColor: "transparent",
+          iconImage: "assets/projects/quickdrop-scooter.png",
+          iconType: "standalone-image"
+        },
+        {
           id: "proj-video-scene-segmentation",
-          title: "Video Scene Segmentation using Optimum N-Means Clustering",
-          subtitle: "what's right now • Video scene-segmentation pipeline using ONM clustering",
-          date: "Present",
-          color: "#E76239", // Warm Terracotta
-          textColor: "#FFFFFF",
-          tags: ["WHAT'S RIGHT NOW", "Python", "OpenCV", "NumPy", "SciPy", "scikit-image", "scikit-learn"],
-          overview: "Created a video scene-segmentation pipeline using ONM (Optimum N-Means) clustering, which determines cluster count by counting recurring objects instead of searching over k.",
-          description: "Researched and developed an unsupervised video scene-segmentation framework that eliminates heuristic parameter tuning by mathematically deriving optimal cluster counts from recurring visual objects across multi-modal frame feature representations.",
-          sections: [
-            {
-              heading: "Feature Engineering & Preprocessing",
-              items: [
-                "Extracted 379 per-frame features from CLAHE-enhanced frames, then reduced via PCA to 95% variance for clustering."
-              ]
-            },
-            {
-              heading: "Optimum N-Means (ONM) & Centroid Selection",
-              items: [
-                "Built an ONM clustering engine that dynamically calculates cluster count by counting recurring visual objects rather than exhaustive search over k.",
-                "Implemented SDCO centroid selection and ECVM validation for rigorous cluster quality assessment."
-              ]
-            },
-            {
-              heading: "Temporal Smoothing & Boundary Detection",
-              items: [
-                "Extended pipeline with temporal smoothing and spike-based boundary detection to reach up to 97% intra-cluster association on benchmark video datasets."
-              ]
-            }
-          ]
+          title: "Video Scene Segmentation Pipeline",
+          date: "Aug 2026 – Sep 2026",
+          githubUrl: "https://github.com/nikvermaaa/video-segmentation.",
+          stack: "Python, OpenCV, NumPy, SciPy, scikit-image, scikit-learn",
+          oneLiner: "An unsupervised machine learning pipeline that automates video segmentation by detecting scene transitions and dividing videos into meaningful segments, reducing manual effort for video editors.",
+          iconBg: "transparent",
+          iconColor: "transparent",
+          iconImage: "assets/projects/video-segmentation-camcorder.png",
+          iconType: "standalone-image"
+        },
+        {
+          id: "proj-bharat-bazaar",
+          title: "Bharat Bazaar",
+          date: "Sep 2026 – Oct 2026",
+          githubUrl: "https://github.com/nikvermaaa/BharatBazaar",
+          stack: "FastAPI, Python, ChromaDB, Groq LPU, Apache Parquet, Scikit-learn",
+          oneLiner: "An intelligent equity research terminal for NSE and BSE listed companies, combining code calculated technical analysis, citation grounded financial RAG, and deduplicated news intelligence into an interactive, SEBI compliant dashboard.",
+          iconBg: "transparent",
+          iconColor: "transparent",
+          iconImage: "assets/projects/bharat-bazaar-bull-bear.png",
+          iconType: "standalone-image"
         },
         {
           id: "proj-latent-diffusion-tumor",
-          title: "Addressing Data Scarcity in Medical Imaging: A Latent Diffusion Approach",
-          subtitle: "Generative AI pipeline synthesizing tumor-bearing brain MRI slices using Latent Diffusion Models (LDM)",
-          date: "Feb/2026 – Mar/2026",
-          color: "#4CA664", // Emerald Green
-          textColor: "#FFFFFF",
+          title: "Latent Diffusion for Medical Imaging",
+          date: "Feb 2026 – Mar 2026",
           githubUrl: "https://github.com/nikvermaaa/latent-diffusion-tumor-synthesis",
-          tags: ["Python", "PyTorch", "TensorFlow", "LDMs", "U-Net", "KL-Autoencoder", "MS-SSIM"],
-          overview: "Engineered a generative AI pipeline using a Latent Diffusion Model (LDM) to synthesize highly realistic, tumor-bearing brain MRI slices to augment limited clinical medical imaging datasets.",
-          description: "Addresses the critical bottleneck of data scarcity in medical AI diagnostics by developing a high-fidelity latent diffusion architecture capable of generating paired synthetic MRI scans and segmentation masks.",
-          sections: [
-            {
-              heading: "Dataset Engineering & Preprocessing",
-              items: [
-                "Preprocessed the BraTS 2020 dataset (369 patients), extracting and normalizing 24,354 cross-sectional tumor slices into a 2-channel format (MRI and Tumor Mask).",
-                "Stored data as Float16 tensors for maximum VRAM throughput and compute efficiency during high-batch training."
-              ]
-            },
-            {
-              heading: "Architecture & Latent Diffusion Pipeline",
-              items: [
-                "Implemented a split-architecture generation process: first encoding images into a compressed latent space using a pre-trained AutoencoderKL (VAE).",
-                "Trained a custom UNet with spatial self-attention and cross-attention mechanisms to denoise latents via a DDPM scheduler."
-              ]
-            },
-            {
-              heading: "Validation & Generation Fidelity",
-              items: [
-                "Achieved high-fidelity synthetic generation by optimizing a Mean-Squared Error (MSE) objective over 1,000 diffusion timesteps.",
-                "Validated generative output and anatomical consistency against a 2,436-slice holdout validation set using MS-SSIM and perceptual loss metrics."
-              ]
-            }
-          ]
+          stack: "Python, PyTorch, TensorFlow, LDMs, U-Net, KL-Autoencoder",
+          oneLiner: "Addressing the scarcity of medical imaging datasets through a generative machine learning pipeline that synthesizes tumor-bearing brain MRI slices using Latent Diffusion Models.",
+          iconBg: "transparent",
+          iconColor: "transparent",
+          iconImage: "assets/projects/latent-diffusion-mri.png",
+          iconType: "standalone-image"
         },
         {
           id: "proj-subgate",
-          title: "SubGate — Industrial IoT Protocol Gateway & Normalizer",
-          subtitle: "High-performance IIoT gateway bridging Modbus TCP, JSON HTTP, PostgreSQL, and MQTT",
-          date: "AUG – SEP 2026",
-          color: "#B893B3", // Lavender / Mauve
-          textColor: "#18181B",
+          title: "SubGate",
+          date: "Jul 2026 – Aug 2026",
           githubUrl: "https://github.com/nikvermaaa/SubGate",
-          tags: ["Java 21", "Spring Boot", "PostgreSQL", "MQTT", "Modbus TCP", "Hexagonal Architecture", "HiveMQ"],
-          overview: "A high-performance, modular Industrial IoT (IIoT) protocol converter and data normalizer designed to bridge the gap between legacy Operational Technology (OT) fieldbuses and modern Information Technology (IT) / Cloud infrastructure.",
-          description: "Architected a resilient Industrial IoT gateway service that ingests telemetry from heterogeneous protocols (Modbus TCP PLCs, power meters, and JSON HTTP edge sensors), normalizes readings into a unified schema, persists records in PostgreSQL, and broadcasts real-time streams across MQTT brokers.",
-          sections: [
-            {
-              heading: "Heterogeneous Protocol Ingestion & Adapters",
-              items: [
-                "Built dedicated protocol adapters (ModbusClientPoller via Digitalpetri Netty Modbus and IngestionController for JSON HTTP).",
-                "Polls binary register-based fieldbus devices (Modbus TCP) and receives semi-structured JSON telemetry over Spring REST endpoints."
-              ]
-            },
-            {
-              heading: "Hexagonal Architecture & Data Normalization",
-              items: [
-                "Engineered a decoupled Hexagonal (Ports & Adapters) pipeline converting raw sensor inputs into a unified 'NormalizedReading' schema with standardized engineering units.",
-                "Implemented thread-safe pipeline orchestration with configurable polling intervals and fault-tolerant reconnection logic."
-              ]
-            },
-            {
-              heading: "Dual Persistence & Real-Time MQTT Dispatch",
-              items: [
-                "Persists time-series records into PostgreSQL with indexed timestamps and device lookups for historical auditing.",
-                "Publishes real-time telemetry streams to enterprise MQTT brokers (HiveMQ Cloud / Mosquitto) on dedicated per-device topics for SCADA dashboards and cloud consumers."
-              ]
-            }
-          ]
-        },
-        {
-          id: "proj-complaint-management",
-          title: "AI-Powered Customer Complaint Management System",
-          subtitle: "Intelligent QA platform converting unstructured feedback into structured records via LangGraph, FastAPI & Groq",
-          date: "JAN 2026 – FEB 2026",
-          color: "#F09A52", // Tangerine / Peach
-          textColor: "#18181B",
-          githubUrl: "https://github.com/nikvermaaa/AI-Powered-Customer-Complaint-Management-System",
-          tags: ["FastAPI", "React", "LangGraph", "Groq LPU", "Python", "MySQL", "Redux Toolkit", "Pydantic"],
-          overview: "An intelligent, state-driven Quality Assurance platform that transforms unstructured customer feedback (emails, PDFs, DOCX, text) into structured, actionable database records with real-time extraction and non-destructive form updates.",
-          description: "Engineered an end-to-end full-stack platform pairing FastAPI and LangGraph with Groq's high-speed LPU inference (llama-3.1-8b-instant) to perform sub-second data mapping from complex documents directly into type-safe database schemas.",
-          sections: [
-            {
-              heading: "Multi-Format In-Memory Ingestion",
-              items: [
-                "Directly parses raw PDFs, DOCX, and EML files in-memory using io.BytesIO buffers, eliminating disk I/O bottlenecks.",
-                "Extracts and normalizes multi-format unstructured complaints for instantaneous downstream AI extraction."
-              ]
-            },
-            {
-              heading: "State-Driven Agentic AI (LangGraph + Groq)",
-              items: [
-                "Utilizes Groq's LPUs and llama-3.1-8b-instant for sub-second, high-accuracy data mapping from messy unstructured text.",
-                "Engineered stateful context management with LangGraph that understands active form state, enabling conversational corrections (e.g., 'Change priority to urgent') without overwriting existing fields.",
-                "Enforced type-safe outputs via Pydantic schemas, guaranteeing structural JSON generation and preventing database hallucinations."
-              ]
-            },
-            {
-              heading: "Full-Stack Architecture & Cloud Persistence",
-              items: [
-                "Built a dynamic two-column React frontend with Redux Toolkit for seamless bidirectional synchronization between manual typing and AI form fills.",
-                "Developed asynchronous FastAPI backend integrated with SQLAlchemy ORM and Aiven cloud-hosted MySQL for persistent complaint storage and dashboard analytics."
-              ]
-            }
-          ]
-        },
-        {
-          id: "proj-ghosla",
-          title: "Ghosla — AI Voice Agent & Autonomous Rental Discovery",
-          subtitle: "Conversational voice agent + concurrent browser automation scanning 3 rental portals live",
-          date: "APR – MAY 2026",
-          color: "#F4C74E", // Golden Yellow
-          textColor: "#18181B",
-          githubUrl: "https://github.com/nikvermaaa/ghosla",
-          tags: ["Next.js", "FastAPI", "Pipecat", "Deepgram STT", "OpenAI GPT-4", "Cartesia TTS", "Browser Automation"],
-          overview: "An autonomous AI voice assistant and multi-platform real estate search engine that conducts interactive discovery calls in Hindi/English, concurrently scrapes rental portals, and ranks shortlists based on match, vibe, and locality intelligence.",
-          description: "Engineered an end-to-end conversational voice pipeline using Pipecat, Deepgram, Cartesia, and GPT-4 paired with an autonomous browser worker engine that searches NoBroker, 99acres, and MagicBricks in parallel to eliminate rental discovery friction.",
-          sections: [
-            {
-              heading: "Real-Time Multilingual Voice AI Pipeline",
-              items: [
-                "Architected an ultra-low-latency voice pipeline integrating Pipecat, Deepgram Speech-to-Text (Hindi/Hinglish/English), Silero VAD, and Cartesia TTS.",
-                "Conducts dynamic preference extraction calls (commute, budget, amenities, water supply, AQI thresholds) with conversational state memory."
-              ]
-            },
-            {
-              heading: "Concurrent Autonomous Browser Automation",
-              items: [
-                "Spawns asynchronous headless browser workers to query and scrape NoBroker, 99acres, and MagicBricks simultaneously based on extracted criteria.",
-                "Aggregates, dedupes, and filters real-time rental listings across platforms in under 2 minutes."
-              ]
-            },
-            {
-              heading: "AI Scoring & Locality Intelligence",
-              items: [
-                "Ranks shortlisted properties with multi-dimensional scoring: Match Score, Vibe Score, and Fraud/Fake Post Risk Index.",
-                "Enriches recommendations with locality intelligence including AQI data, metro connectivity, commute time estimates, and water supply reliability."
-              ]
-            }
-          ]
-        },
-        {
-          id: "proj-ml-monitoring-dashboard",
-          title: "End-to-End ML Model Monitoring & Drift Detection Pipeline",
-          subtitle: "Real-time data drift & model degradation engine using Evidently AI, Streamlit, and SQLite",
-          date: "JUN – JUL 2026",
-          color: "#56A5B2", // Teal / Cyan
-          textColor: "#FFFFFF",
-          githubUrl: "https://github.com/nikvermaaa/machine-learning-model-monitoring-dashboard",
-          tags: ["Evidently AI", "Streamlit", "Scikit-learn", "Plotly", "Python", "SQLite", "Data Drift"],
-          overview: "An automated machine learning observability and monitoring pipeline that detects data drift and model degradation in real-time, executing continuous statistical evaluations and interactive visualization dashboards.",
-          description: "Engineered a plug-and-play ML monitoring framework utilizing Evidently AI and Scikit-learn to continuously assess baseline vs. production feature distributions, logging drift metrics into SQLite and rendering live interactive telemetry dashboards via Streamlit and Plotly.",
-          sections: [
-            {
-              heading: "Automated Statistical Drift Detection",
-              items: [
-                "Utilizes Evidently AI and Scikit-learn statistical tests (KS-test, PSI, Wasserstein distance) to detect covariate shift and concept drift between reference and production inferences.",
-                "Calculates dataset drift shares, target drift metrics, and per-feature distribution shifts automatically."
-              ]
-            },
-            {
-              heading: "Telemetry Logging & SQLite Persistence",
-              items: [
-                "Streams and persists continuous statistical drift metrics, timestamps, and model performance indicators into an optimized SQLite schema.",
-                "Provides modular connectors to plug directly into live production inference databases or event streams."
-              ]
-            },
-            {
-              heading: "Interactive Observability Dashboard (Streamlit + Plotly)",
-              items: [
-                "Interactive UI built with Streamlit and Plotly rendering real-time drift heatmaps, time-series degradation charts, and feature drift distributions.",
-                "Enables rapid diagnostic filtering and alert thresholds for proactive model retraining."
-              ]
-            }
-          ]
+          stack: "Java, Spring Boot, Modbus TCP, MQTT, PostgreSQL, REST APIs",
+          oneLiner: "SubGate bridges the OT-IT gap by integrating industrial protocols, normalizing telemetry, and streaming real-time data to PostgreSQL and MQTT for cloud and SCADA integration.",
+          iconBg: "transparent",
+          iconColor: "transparent",
+          iconImage: "assets/projects/subgate-arduino.png",
+          iconType: "standalone-image"
         }
       ]
     },

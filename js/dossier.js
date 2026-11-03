@@ -1,4 +1,4 @@
-import { PORTFOLIO_DATA } from './data.js';
+import { PORTFOLIO_DATA } from './data.js?v=99';
 
 let activeFolderId = null;
 let highestZIndex = 100;
@@ -52,9 +52,12 @@ export function openFolderDossier(folderId) {
   activeFolderId = folderId;
   document.body.style.overflow = 'hidden';
 
-  // Hide stickers layer when opening folder workspace
+  // Hide stickers layer and pause koi pond when opening folder workspace
   if (typeof window.hideStickers === 'function') {
     window.hideStickers();
+  }
+  if (typeof window.pauseKoiPond === 'function') {
+    window.pauseKoiPond();
   }
 
   // Render docked sidebar tabs
@@ -97,10 +100,15 @@ export function closeDossier() {
     document.body.style.overflow = '';
     activeFolderId = null;
 
-    // Show stickers again ONLY if currently on home landing view
+    // Show stickers and resume koi pond again ONLY if currently on home landing view
     const currentHash = window.location.hash.replace('#', '') || 'home';
-    if (currentHash === 'home' && typeof window.showStickers === 'function') {
-      window.showStickers();
+    if (currentHash === 'home') {
+      if (typeof window.showStickers === 'function') {
+        window.showStickers();
+      }
+      if (typeof window.resumeKoiPond === 'function') {
+        window.resumeKoiPond();
+      }
     }
   }, 250);
 }
@@ -146,7 +154,89 @@ function renderFolderDocuments(folder) {
   workspaceCanvas.innerHTML = '';
   highestZIndex = 100;
 
-  // Case 1: Folder contains structured projects (e.g. Tec Projects, Editing Projects)
+  // Case 1A: Project folder (clean minimalist list matching user reference)
+  if (folder.id === 'tec-projects') {
+    const container = document.createElement('div');
+    container.className = 'w-full max-w-2xl mx-auto py-6 sm:py-10 px-3 sm:px-6';
+
+    const getIconSvg = (type) => {
+      switch (type) {
+        case 'chart':
+          return `<svg class="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>`;
+        case 'iot':
+          return `<svg class="w-6 h-6 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>`;
+        case 'video':
+          return `<svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M4 6h11a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 012-2z"/></svg>`;
+        case 'ai':
+          return `<svg class="w-6 h-6 text-zinc-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>`;
+        case 'diffusion':
+          return `<svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>`;
+        case 'voice':
+          return `<svg class="w-6 h-6 text-zinc-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>`;
+        default:
+          return `<svg class="w-6 h-6 text-zinc-800" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>`;
+      }
+    };
+
+    container.innerHTML = `
+      <div class="bg-white rounded-2xl p-6 sm:p-10 shadow-2xl border border-zinc-200/90 text-zinc-900 font-sans">
+        <!-- Minimalist Section Header: Projects (matches user reference) -->
+        <div class="flex items-center justify-between mb-6 sm:mb-8 pb-3 border-b border-zinc-100">
+          <h3 class="font-sans text-sm sm:text-[15px] font-semibold text-zinc-500 tracking-normal select-none">
+            Projects
+          </h3>
+          <span class="font-mono text-[11px] text-zinc-400 font-medium">GITHUB ARCHIVE</span>
+        </div>
+
+        <!-- Five Technical Projects List -->
+        <div class="space-y-6 sm:space-y-7">
+          ${folder.projects.map((proj) => `
+            <div class="flex items-start gap-3.5 sm:gap-4 group">
+              <!-- Left: Project Icon Box -->
+              ${proj.id === 'proj-bharat-bazaar' && proj.iconImage ? `
+                <div class="w-11 h-11 sm:w-12 sm:h-12 shrink-0 flex items-center justify-end relative">
+                  <img src="${proj.iconImage}" alt="${proj.title}" class="max-w-none w-[52px] sm:w-[68px] h-auto object-contain select-none transition-transform group-hover:scale-105 pointer-events-none" />
+                </div>
+              ` : proj.iconType === 'standalone-image' && proj.iconImage ? `
+                <img src="${proj.iconImage}" alt="${proj.title}" class="w-11 h-11 sm:w-12 sm:h-12 object-contain shrink-0 select-none transition-transform group-hover:scale-105" />
+              ` : `
+                <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center shrink-0 shadow-sm border border-black/10 transition-transform group-hover:scale-105" style="background-color: ${proj.iconBg || '#18181B'}">
+                  ${getIconSvg(proj.iconType)}
+                </div>
+              `}
+
+              <!-- Right: Content -->
+              <div class="min-w-0 flex-1">
+                <!-- Title & Date -->
+                <div class="flex flex-wrap items-baseline gap-x-2 gap-y-0.5 leading-snug">
+                  <a href="${proj.githubUrl}" target="_blank" rel="noopener noreferrer" class="project-title-link text-[15px] sm:text-base inline-flex items-center gap-1.5" title="Open ${proj.title} on GitHub">
+                    <span>${proj.title}</span>
+                    <svg class="w-3.5 h-3.5 text-zinc-400 group-hover:text-zinc-700 transition-colors shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                  </a>
+                  <span class="text-zinc-500 font-normal text-xs sm:text-sm">· ${proj.date}</span>
+                </div>
+
+                <!-- Stack -->
+                <div class="text-zinc-600 font-sans text-xs sm:text-[13px] mt-1 leading-snug">
+                  <span class="font-semibold text-zinc-700">Stack:</span> ${proj.stack}
+                </div>
+
+                <!-- One Line Description -->
+                <p class="text-zinc-600 text-xs sm:text-[13.5px] leading-relaxed mt-1">
+                  ${proj.oneLiner}
+                </p>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+
+    workspaceCanvas.appendChild(container);
+    return;
+  }
+
+  // Case 1B: Other structured project folders (e.g. Editing Projects)
   // Display small colorful project folder boxes matching user reference
   if (folder.projects && folder.projects.length > 0) {
     const gridWrapper = document.createElement('div');

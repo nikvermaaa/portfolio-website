@@ -1,66 +1,107 @@
-import { PORTFOLIO_DATA } from './data.js';
-import { initDossier, openFolderDossier } from './dossier.js';
-import { initInteractiveStickers } from './stickers.js';
+import { PORTFOLIO_DATA } from './data.js?v=99';
+import { initDossier, openFolderDossier } from './dossier.js?v=95';
+import { initInteractiveStickers } from './stickers.js?v=71';
+import { initKoiPond, pauseKoiPond, resumeKoiPond } from './koiPond.js';
+import { initMathMotion } from './mathMotion.js?v=4';
+
+window.pauseKoiPond = pauseKoiPond;
+window.resumeKoiPond = resumeKoiPond;
 
 function initApp() {
-  initIntroSplash();
+  initKoiPond('koi-canvas', 'koi-hint');
+  initMathMotion();
+  initRoleToolbar();
   initNavbar();
   initScrapbook();
   renderFolderCabinet();
   initDossier();
   initInteractiveStickers();
   initDirectContactForm();
+  initISTClock();
 }
 
-let splashInitialized = false;
+/* ============================================================ */
+/* INTERACTIVE ROLE BADGE & MICRO-TOOLBAR (shwn.design style)   */
+/* ============================================================ */
+function initRoleToolbar() {
+  const rolePill = document.getElementById('role-pill');
+  const roleText = document.getElementById('role-text');
+  const fontLabel = document.getElementById('role-font-label');
+  const btnBold = document.getElementById('role-btn-bold');
+  const btnItalic = document.getElementById('role-btn-italic');
+  const toolbar = document.getElementById('role-toolbar');
+  if (!rolePill || !roleText) return;
 
-function initIntroSplash() {
-  if (splashInitialized) return;
-  splashInitialized = true;
+  const fontOptions = [
+    { name: 'Caveat ▾', familyClass: 'font-handwriting', sizeClass: 'text-2xl sm:text-3xl' },
+    { name: 'Newsreader ▾', familyClass: 'font-serif', sizeClass: 'text-xl sm:text-2xl italic' },
+    { name: 'Space Mono ▾', familyClass: 'font-mono', sizeClass: 'text-lg sm:text-xl' },
+    { name: 'Plus Jakarta ▾', familyClass: 'font-sans', sizeClass: 'text-xl sm:text-2xl' }
+  ];
 
-  const splash = document.getElementById('intro-splash');
-  const bubble = document.getElementById('intro-bubble');
-  const textEl = document.getElementById('intro-text');
-  if (!splash || !bubble || !textEl) return;
+  const roleTitles = [
+    'software engineer',
+    'design engineer',
+    'full-stack engineer'
+  ];
 
-  const urlParams = new URLSearchParams(window.location.search);
-  if (urlParams.get('nosplash') === 'true') {
-    splash.style.display = 'none';
-    return;
+  let currentFontIdx = 0;
+  let currentRoleIdx = 0;
+  let isBold = true;
+  let isItalic = false;
+
+  function applyStyles() {
+    const font = fontOptions[currentFontIdx];
+    roleText.className = `${font.familyClass} ${font.sizeClass} ${isBold ? 'font-bold' : 'font-normal'} ${isItalic ? 'italic' : ''}`;
+    if (fontLabel) fontLabel.textContent = font.name;
+    if (btnBold) {
+      btnBold.className = `px-1.5 py-0.5 rounded cursor-pointer ${isBold ? 'bg-zinc-900 text-white font-bold' : 'hover:bg-zinc-100 text-zinc-700'}`;
+    }
+    if (btnItalic) {
+      btnItalic.className = `px-1.5 py-0.5 rounded cursor-pointer italic ${isItalic ? 'bg-zinc-900 text-white' : 'hover:bg-zinc-100 text-zinc-700'}`;
+    }
   }
 
-  // 1. Initial State: Display "Oh, hello there!"
-  textEl.textContent = "Oh, hello there!";
-  setTimeout(() => {
-    bubble.classList.remove('scale-95', 'opacity-0');
-    bubble.classList.add('scale-100', 'opacity-100');
-  }, 50);
+  // Click font label to cycle font family
+  if (fontLabel) {
+    fontLabel.addEventListener('click', (e) => {
+      e.stopPropagation();
+      currentFontIdx = (currentFontIdx + 1) % fontOptions.length;
+      applyStyles();
+    });
+  }
 
-  // 2. Smoothly transition to "You found me!"
-  setTimeout(() => {
-    textEl.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
-    textEl.style.opacity = '0';
-    textEl.style.transform = 'translateY(-3px)';
-    
-    setTimeout(() => {
-      textEl.textContent = "You found me!";
-      textEl.style.opacity = '1';
-      textEl.style.transform = 'translateY(0)';
-    }, 200);
-  }, 1100);
+  // Click role text to cycle title
+  roleText.addEventListener('click', (e) => {
+    e.stopPropagation();
+    currentRoleIdx = (currentRoleIdx + 1) % roleTitles.length;
+    roleText.textContent = roleTitles[currentRoleIdx];
+  });
 
-  // 3. Smoothly fade out splash screen
-  const dismissSplash = () => {
-    splash.style.opacity = '0';
-    splash.style.transform = 'scale(1.02)';
-    splash.style.pointerEvents = 'none';
-    setTimeout(() => {
-      splash.style.display = 'none';
-    }, 600);
-  };
+  // Toggle Bold
+  if (btnBold) {
+    btnBold.addEventListener('click', (e) => {
+      e.stopPropagation();
+      isBold = !isBold;
+      applyStyles();
+    });
+  }
 
-  setTimeout(dismissSplash, 2600);
-  splash.addEventListener('click', dismissSplash);
+  // Toggle Italic
+  if (btnItalic) {
+    btnItalic.addEventListener('click', (e) => {
+      e.stopPropagation();
+      isItalic = !isItalic;
+      applyStyles();
+    });
+  }
+
+  // Click role pill itself to toggle toolbar visibility on touch devices
+  rolePill.addEventListener('click', () => {
+    if (toolbar) toolbar.classList.toggle('is-open');
+  });
+
+  applyStyles();
 }
 
 if (document.readyState === 'loading') {
@@ -73,7 +114,28 @@ export function switchView(targetView) {
   const validViews = ['home', 'about', 'folders'];
   const viewId = validViews.includes(targetView) ? targetView : 'home';
 
-  // 1. Hide all views, display the selected view
+  // 1. Move and manage WebGL Koi Pond simulation: active on both home and about
+  const koiCard = document.getElementById('koi-pond-card');
+  const homeSlot = document.getElementById('koi-card-container');
+  const aboutSlot = document.getElementById('koi-card-contact-container');
+
+  if (viewId === 'home') {
+    if (koiCard && homeSlot && koiCard.parentElement !== homeSlot) {
+      homeSlot.appendChild(koiCard);
+      window.dispatchEvent(new Event('resize'));
+    }
+    resumeKoiPond();
+  } else if (viewId === 'about') {
+    if (koiCard && aboutSlot && koiCard.parentElement !== aboutSlot) {
+      aboutSlot.appendChild(koiCard);
+      window.dispatchEvent(new Event('resize'));
+    }
+    resumeKoiPond();
+  } else {
+    pauseKoiPond();
+  }
+
+  // 2. Hide all views, display the selected view
   validViews.forEach(v => {
     const el = document.getElementById(`view-${v}`);
     if (el) {
@@ -92,29 +154,23 @@ export function switchView(targetView) {
     }
   });
 
-  // 2. Highlight active tab pill in navbar
-  const navLinks = document.querySelectorAll('#top-navbar-links .nav-item');
-  navLinks.forEach(link => {
-    const href = link.getAttribute('href')?.replace('#', '') || '';
+  // 3. Highlight active tab button in navbar
+  const navBtns = document.querySelectorAll('#top-navbar-links a');
+  navBtns.forEach(btn => {
+    const href = btn.getAttribute('href')?.replace('#', '') || '';
     if (href === viewId) {
-      link.className = 'nav-item active-nav-pill px-2 sm:px-3 py-0.5 sm:py-1 rounded-full bg-amber-300 text-zinc-900 font-bold shadow-sm flex items-center gap-0.5 sm:gap-1 transition-all cursor-pointer';
-      if (href === 'home') {
-        link.innerHTML = '★ HOME';
-      }
+      btn.classList.add('active');
     } else {
-      link.className = 'nav-item px-2 sm:px-3 py-0.5 sm:py-1 rounded-full hover:bg-zinc-200 text-zinc-700 font-medium transition-all cursor-pointer';
-      if (href === 'home') {
-        link.innerHTML = 'HOME';
-      }
+      btn.classList.remove('active');
     }
   });
 
-  // 3. Keep URL hash in sync for clean refresh/bookmarking
+  // 4. Keep URL hash in sync for clean refresh/bookmarking
   if (window.location.hash !== `#${viewId}`) {
     history.replaceState(null, '', `#${viewId}`);
   }
 
-  // 4. Update sticker layout for this specific page
+  // 5. Update sticker layout for this specific page
   if (typeof window.updateStickersForView === 'function') {
     window.updateStickersForView(viewId);
   }
@@ -126,14 +182,17 @@ export function switchView(targetView) {
 window.switchView = switchView;
 
 function initNavbar() {
-  const navLinks = document.querySelectorAll('#top-navbar-links .nav-item');
+  const navLinks = document.querySelectorAll('#top-navbar-links a');
 
   navLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      const targetId = link.getAttribute('href').replace('#', '');
-      switchView(targetId);
-    });
+    const href = link.getAttribute('href');
+    if (href && href.startsWith('#')) {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = href.replace('#', '');
+        switchView(targetId);
+      });
+    }
   });
 
   // Load initial view based on URL parameter or hash (default to 'home')
@@ -213,7 +272,7 @@ function initScrapbook() {
 
   if (aboutEmail && links?.email) {
     aboutEmail.href = `mailto:${links.email}`;
-    aboutEmail.innerHTML = `✉️ ${links.email}`;
+    aboutEmail.textContent = links.email;
   }
   if (aboutLocation && profile?.location) {
     aboutLocation.innerHTML = `📍 ${profile.location}`;
@@ -344,7 +403,7 @@ function initDirectContactForm() {
     }
 
     try {
-      const response = await fetch('https://formsubmit.co/ajax/nikssvermaaa@gmail.com', {
+      const response = await fetch('https://formsubmit.co/ajax/nikhilv129@gmail.com', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -377,7 +436,7 @@ function initDirectContactForm() {
       console.error('Contact form error:', err);
       if (statusMsg) {
         statusMsg.className = 'p-2.5 rounded-md font-mono text-xs text-center bg-red-50 text-red-800 border border-red-300 block';
-        statusMsg.innerHTML = '⚠️ Could not send message. Please email directly at <a href="mailto:nikssvermaaa@gmail.com" class="underline font-bold">nikssvermaaa@gmail.com</a>';
+        statusMsg.innerHTML = '⚠️ Could not send message. Please email directly at <a href="mailto:nikhilv129@gmail.com" class="underline font-bold">nikhilv129@gmail.com</a>';
       }
       if (btnText) btnText.textContent = 'TRY AGAIN';
       if (btnArrow) btnArrow.textContent = '→';
@@ -389,5 +448,27 @@ function initDirectContactForm() {
       }, 4000);
     }
   });
+}
+
+/* ============================================================ */
+/* LIVE IST CLOCK (shwn.design footer style)                     */
+/* ============================================================ */
+function initISTClock() {
+  const clockEl = document.getElementById('contact-ist-clock');
+  if (!clockEl) return;
+
+  function update() {
+    const now = new Date();
+    clockEl.textContent = now.toLocaleTimeString('en-GB', {
+      timeZone: 'Asia/Kolkata',
+      hour12: false,
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit'
+    });
+  }
+
+  update();
+  setInterval(update, 1000);
 }
 

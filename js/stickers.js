@@ -11,37 +11,11 @@ let currentView = 'home';
 
 // Page-specific layout configurations matching the 3 user reference images
 const PAGE_STICKER_LAYOUTS = {
-  // IMAGE 1: HOME PAGE
-  home: [
-    { id: 'stk-dino', name: 'dino', xVw: 12.5, yVh: 27, rotate: -12, width: 78, alt: 'Pixel Dino' },
-    { id: 'stk-camera', name: 'camera', xVw: 90, yVh: 16, rotate: -8, width: 72, alt: 'Digital Camera' },
-    { id: 'stk-hourglass', name: 'hourglass', xVw: 77, yVh: 19, rotate: -12, width: 64, alt: 'Hourglass' },
-    { id: 'stk-check', name: 'clipboard_check', xVw: 4.5, yVh: 42, rotate: -5, width: 68, alt: 'Checklist Clipboard' },
-    { id: 'stk-alien', name: 'alien', xVw: 18, yVh: 47, rotate: 8, width: 70, alt: 'Pixel Alien' },
-    { id: 'stk-star', name: 'star', xVw: 75, yVh: 47, rotate: 15, width: 66, alt: 'Pixel Star' },
-    { id: 'stk-audit', name: 'clipboard_audit', xVw: 91, yVh: 60, rotate: 8, width: 68, alt: 'Audit Clipboard' },
-    { id: 'stk-cd', name: 'cd_rom', xVw: 4, yVh: 63, rotate: -12, width: 78, alt: 'Holo CD' },
-    { id: 'stk-mp3', name: 'mp3_player', xVw: 23, yVh: 73, rotate: 10, width: 62, alt: 'MP3 Player' },
-    { id: 'stk-headphones', name: 'headphones', xVw: 62, yVh: 77, rotate: 6, width: 72, alt: 'Headphones' },
-    { id: 'stk-start', name: 'start_button', xVw: 6, yVh: 78, rotate: -2, width: 92, alt: 'Start Button' },
-    { id: 'stk-ipod', name: 'ipod_classic', xVw: 80, yVh: 78, rotate: 6, width: 66, alt: 'iPod Classic' }
-  ],
+  // IMAGE 1: HOME PAGE (Clean aesthetic matching shwn.design reference, stickers disabled on home)
+  home: [],
 
-  // IMAGE 2: ABOUT PAGE
-  about: [
-    { id: 'stk-star', name: 'star', xVw: 15, yVh: 18, rotate: 15, width: 66, alt: 'Pixel Star' },
-    { id: 'stk-camera', name: 'camera', xVw: 90, yVh: 16, rotate: -8, width: 72, alt: 'Digital Camera' },
-    { id: 'stk-alien', name: 'alien', xVw: 16, yVh: 51, rotate: 8, width: 70, alt: 'Pixel Alien' },
-    { id: 'stk-dino', name: 'dino', xVw: 80.5, yVh: 47, rotate: -10, width: 78, alt: 'Pixel Dino' },
-    { id: 'stk-audit', name: 'clipboard_audit', xVw: 91, yVh: 60, rotate: 8, width: 68, alt: 'Audit Clipboard' },
-    { id: 'stk-hourglass', name: 'hourglass', xVw: 39, yVh: 63, rotate: -12, width: 64, alt: 'Hourglass' },
-    { id: 'stk-check', name: 'clipboard_check', xVw: 2.5, yVh: 77, rotate: -5, width: 68, alt: 'Checklist Clipboard' },
-    { id: 'stk-mp3', name: 'mp3_player', xVw: 19, yVh: 73, rotate: 10, width: 62, alt: 'MP3 Player' },
-    { id: 'stk-headphones', name: 'headphones', xVw: 62, yVh: 76, rotate: 6, width: 72, alt: 'Headphones' },
-    { id: 'stk-ipod', name: 'ipod_classic', xVw: 84, yVh: 80, rotate: 6, width: 66, alt: 'iPod Classic' },
-    { id: 'stk-cd', name: 'cd_rom', xVw: 3.5, yVh: 64, rotate: -12, width: 78, alt: 'Holo CD' },
-    { id: 'stk-start', name: 'start_button', xVw: 6, yVh: 86, rotate: -2, width: 92, alt: 'Start Button' }
-  ],
+  // CONTACT PAGE (Clean layout matching reference image)
+  about: [],
 
   // IMAGE 3: DOSSIER FOLDERS PAGE
   folders: [
@@ -90,19 +64,17 @@ export function initInteractiveStickers() {
   const initialHash = window.location.hash.replace('#', '') || 'home';
   currentView = initialHash;
 
-  // Position elements for home view
-  applyStickerLayout('home', false);
-
   if (currentView === 'home') {
-    showStickers();
-  } else {
     hideStickers();
+  } else {
+    showStickers();
+    applyStickerLayout(currentView, false);
   }
 
   // Window resize handler
   window.addEventListener('resize', () => {
-    if (currentView === 'home') {
-      applyStickerLayout('home', false);
+    if (currentView !== 'home') {
+      applyStickerLayout(currentView, false);
     }
   });
 
@@ -116,17 +88,17 @@ export function initInteractiveStickers() {
 export function updateStickersForView(viewId) {
   currentView = viewId;
   if (viewId === 'home') {
-    showStickers();
-    applyStickerLayout('home', true);
-  } else {
     hideStickers();
+  } else {
+    showStickers();
+    applyStickerLayout(viewId, true);
   }
 }
 window.updateStickersForView = updateStickersForView;
 
 // Mobile-specific layout configurations matching user reference image
 const MOBILE_STICKER_LAYOUTS = {
-  home: [
+  about: [
     { id: 'stk-dino', name: 'dino', xVw: 6, yVh: 22, rotate: -12, width: 50, alt: 'Pixel Dino' },
     { id: 'stk-hourglass', name: 'hourglass', xVw: 35, yVh: 20, rotate: -10, width: 44, alt: 'Hourglass' },
     { id: 'stk-star', name: 'star', xVw: 65, yVh: 19, rotate: 18, width: 46, alt: 'Pixel Star' },
@@ -137,7 +109,7 @@ const MOBILE_STICKER_LAYOUTS = {
 };
 
 function applyStickerLayout(viewId, animate = true) {
-  const desktopLayout = PAGE_STICKER_LAYOUTS.home;
+  const desktopLayout = PAGE_STICKER_LAYOUTS[viewId] || [];
   const vw = window.innerWidth;
   const vh = window.innerHeight;
   const isMobile = vw < 768;
