@@ -45,7 +45,7 @@ export function initMathMotion() {
   let P, I, M, F, S;
   function updateTheme() {
     const isDark = matchMedia('(prefers-color-scheme: dark)').matches;
-    P = isDark ? '#a78bfa' : '#6b3fd4';
+    P = isDark ? '#52b788' : '#2d6a4f';
     I = isDark ? '#ececea' : '#222';
     M = isDark ? '#8a8a88' : '#777';
     F = isDark ? '#444' : '#d4d4d2';
