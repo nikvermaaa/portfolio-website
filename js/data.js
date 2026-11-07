@@ -70,7 +70,7 @@ export const PORTFOLIO_DATA = {
           id: "proj-video-scene-segmentation",
           title: "Video Scene Segmentation Pipeline",
           date: "Aug 2026 – Sep 2026",
-          githubUrl: "https://github.com/nikvermaaa/video-segmentation.",
+          githubUrl: "https://github.com/nikvermaaa/video-segmentation",
           stack: "Python, OpenCV, NumPy, SciPy, scikit-image, scikit-learn",
           oneLiner: "An unsupervised machine learning pipeline that automates video segmentation by detecting scene transitions and dividing videos into meaningful segments, reducing manual effort for video editors.",
           iconBg: "transparent",
