@@ -66,6 +66,7 @@ const PAL = [
 
 /* ---------- GPU side (WebGL2) ---------- */
 const VS = `#version 300 es
+precision highp float;
 layout(location=0) in vec2 a;
 out vec2 vUv;
 void main(){
@@ -588,17 +589,30 @@ function render() {
 
 function resizeSimulation() {
   if (!cv) return;
-  const r = cv.getBoundingClientRect();
+  const card = cv.parentElement || cv;
+  const r = card.getBoundingClientRect();
   if (r.width === 0 || r.height === 0) return;
+
   const isMobile = isMobileDevice();
-  const maxDPR = isMobile ? 1.0 : 1.25;
-  const k = Math.min(window.devicePixelRatio || 1, maxDPR, Math.sqrt(900000 / (r.width * r.height)));
-  cv.width = Math.round(r.width * k);
-  cv.height = Math.round(r.height * k);
-  DK = cv.width / r.width;
-  const sc = Math.max(1, Math.sqrt(r.width * r.height / 220000));
-  W = Math.ceil(r.width / sc);
-  H = Math.ceil(r.height / sc);
+  const cssWidth = Math.round(r.width);
+  const cssHeight = Math.round(cssWidth * (10 / 16));
+
+  cv.style.width = cssWidth + 'px';
+  cv.style.height = cssHeight + 'px';
+  if (card !== cv) {
+    card.style.height = cssHeight + 'px';
+  }
+
+  const maxDPR = isMobile ? 2.0 : 1.25;
+  const dpr = Math.min(window.devicePixelRatio || 1, maxDPR, Math.sqrt(900000 / (cssWidth * cssHeight)));
+
+  cv.width = Math.round(cssWidth * dpr);
+  cv.height = Math.round(cssHeight * dpr);
+  DK = cv.width / cssWidth;
+
+  const sc = Math.max(1, Math.sqrt(cssWidth * cssHeight / 220000));
+  W = Math.ceil(cssWidth / sc);
+  H = Math.ceil(cssHeight / sc);
   S.width = B.width = W;
   S.height = B.height = H;
   L = Math.max(34, Math.min(W, H) * 0.32);
