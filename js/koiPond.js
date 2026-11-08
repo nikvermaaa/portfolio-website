@@ -273,6 +273,70 @@ function isMobileDevice() {
     || (window.innerWidth < 768 && ('ontouchstart' in window || navigator.maxTouchPoints > 0));
 }
 
+/* Mobile-safe Voronoi caustics with overflow-resilient Hoskins hash (zero tile seams) */
+const CAUS_MOBILE_FS = `#version 300 es
+precision highp float;
+in vec2 vUv;
+out vec4 o;
+uniform vec2 uRes;
+uniform float uTime;
+uniform int uRCount;
+uniform vec4 uR[${NR}];
+uniform vec2 uCS;
+uniform float uCT;
+
+float hash21(vec2 p){
+  vec3 p3 = fract(vec3(p.xyx) * 0.1031);
+  p3 += dot(p3, p3.yzx + 33.33);
+  return fract((p3.x + p3.y) * p3.z);
+}
+
+vec2 ripple(vec2 p){
+  vec2 g = vec2(0.);
+  for(int i = 0; i < ${NR}; i++){
+    if(i >= uRCount) break;
+    vec4 r = uR[i];
+    float age = uTime - r.z;
+    if(age < 0. || age > 3.) continue;
+    vec2 dv = p - r.xy;
+    float d = max(length(dv), .0001);
+    float x = d - age * .3, w = .025 + age * .015, E = exp(-x * x / (w * w));
+    float att = r.w * exp(-age * 1.15) / (1. + d * 6.);
+    g += att * E * (90. * cos(x * 90.) - sin(x * 90.) * 2. * x / (w * w)) * dv / d;
+  }
+  return g;
+}
+
+vec2 voro(vec2 p, float t){
+  vec2 ip = floor(p), fp = fract(p);
+  float f1 = 8., f2 = 8.;
+  for(int j = -1; j <= 1; j++){
+    for(int i = -1; i <= 1; i++){
+      vec2 g = vec2(i, j), r = vec2(hash21(ip + g), hash21(ip + g + 19.7));
+      r = .5 + .5 * sin(t + 6.2831 * r);
+      float d = length(g + r - fp);
+      if(d < f1){ f2 = f1; f1 = d; }
+      else if(d < f2){ f2 = d; }
+    }
+  }
+  return vec2(f1, f2);
+}
+
+float caustic(vec2 px, float t){
+  vec2 a = voro(px / uCS.x + vec2(t * .05, t * .035), t);
+  vec2 b = voro(px / uCS.y + vec2(-t * .04, t * .03) + 7.3, t * 1.3);
+  float l1 = pow(1. - smoothstep(0., .3, a.y - a.x), 3.);
+  float l2 = pow(1. - smoothstep(0., .34, b.y - b.x), 3.);
+  return clamp(l1 * (.3 + .55 * l2), 0., 1.);
+}
+
+void main(){
+  float asp = uRes.x / uRes.y;
+  vec2 g = ripple(vUv * vec2(asp, 1.));
+  o = vec4(vec3(caustic((vUv + g * .033) * uRes, uCT)), 1.);
+}
+`;
+
 /* Pre-baked organic seabed & squircle feathered border (runs ONCE on resize to save mobile GPU) */
 const BAKE_BED_FS = `#version 300 es
 precision highp float;
@@ -281,9 +345,9 @@ out vec4 o;
 uniform vec2 uRes;
 
 float hash21(vec2 p){
-  p = fract(p * vec2(123.34, 456.21));
-  p += dot(p, p + 45.32);
-  return fract(p.x * p.y);
+  vec3 p3 = fract(vec3(p.xyx) * 0.1031);
+  p3 += dot(p3, p3.yzx + 33.33);
+  return fract((p3.x + p3.y) * p3.z);
 }
 
 float vnoise(vec2 p){
@@ -312,16 +376,15 @@ void main(){
   float sWander = vnoise(pp * 2.5 + 3.1) * 1.8 + vnoise(pp * 5.0 + 8.2) * 0.7;
   float sAxis = sCoord.x * 0.72 + sCoord.y * 0.58 + sWander;
   float sandWave = sin(sAxis * 3.14159);
-  sandWave = sign(sandWave) * pow(abs(sandWave), 0.75);
+  sandWave = sign(sandWave) * pow(max(abs(sandWave), 0.0001), 0.75);
 
   // 2. Tactile sediment granularity
   float sandGrit1 = vnoise(pp * 34.0 + vec2(7.3, 3.1));
   float sandGrit2 = vnoise(pp * 68.0 + vec2(1.9, 8.5));
   float sandGrit = (sandGrit1 * 0.65 + sandGrit2 * 0.35 - 0.5) * 0.28;
 
-  // 3. Ultra-fine micro sand specks
-  vec2 grainCoord = floor(vUv * uRes * 0.4);
-  float microSand = (hash21(grainCoord + 13.9) - 0.5) * 0.16;
+  // 3. Smooth continuous micro sand specks (no floor-based rectilinear grid seams)
+  float microSand = (vnoise(pp * 90.0 + vec2(13.9, 27.1)) - 0.5) * 0.12;
 
   // 4. Organic seabed depth, mineral & silt mottling
   float bl = .55 * fbm(pp * 2.2 + 3.1) + .45 * fbm(pp * 5.0 + 8.7);
@@ -447,6 +510,7 @@ function glInit() {
   gl.enableVertexAttribArray(0);
   gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
   P.caus = mkProg(CAUS_FS);
+  P.causMobile = mkProg(CAUS_MOBILE_FS);
   P.blur = mkProg(BLUR_FS);
   P.fin = mkProg(FIN_FS);
   P.bakeBed = mkProg(BAKE_BED_FS);
@@ -521,18 +585,29 @@ function render() {
     gl.texSubImage2D(gl.TEXTURE_2D, 0, 0, 0, gl.RGBA, gl.UNSIGNED_BYTE, S);
 
     if (isMobileDevice() && fb.bed) {
-      // 1. Fast single caustics pass on half-res FBO
-      use(P.caus, fb.c);
-      common(P.caus);
-      gl.uniform2f(Uc(P.caus, 'uCS'), CFG.causticScale * 120 * DK, CFG.causticScale * 50 * DK);
-      gl.uniform1f(Uc(P.caus, 'uCT'), T * CFG.causticSpeed * 6.2831);
+      // 1. Mobile caustics pass using mobile-safe hash, blurred on half-res FBOs
+      use(P.causMobile, fb.c);
+      common(P.causMobile);
+      gl.uniform2f(Uc(P.causMobile, 'uCS'), CFG.causticScale * 120 * DK, CFG.causticScale * 50 * DK);
+      gl.uniform1f(Uc(P.causMobile, 'uCT'), T * CFG.causticSpeed * 6.2831);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
 
-      // 2. Ultra-lightweight direct composite to canvas using pre-baked bed (0 live noise calls)
+      use(P.blur, fb.p);
+      bind(1, fb.c.t);
+      gl.uniform1i(Uc(P.blur, 'uTex'), 1);
+      gl.uniform2f(Uc(P.blur, 'uDir'), 1 / fb.c.w, 0);
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+
+      use(P.blur, fb.q);
+      bind(1, fb.p.t);
+      gl.uniform2f(Uc(P.blur, 'uDir'), 0, 1 / fb.c.h);
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+
+      // 2. Direct composite to canvas using seamless pre-baked bed and blurred caustics
       use(P.finMobile, null);
       common(P.finMobile);
       bind(0, tex);
-      bind(1, fb.c.t);
+      bind(1, fb.q.t);
       bind(2, fb.bed.t);
       gl.uniform1i(Uc(P.finMobile, 'uScene'), 0);
       gl.uniform1i(Uc(P.finMobile, 'uCaus'), 1);
@@ -608,6 +683,10 @@ function resizeSimulation() {
 
   cv.width = Math.round(cssWidth * dpr);
   cv.height = Math.round(cssHeight * dpr);
+  if (isMobile) {
+    if (cv.width % 2 !== 0) cv.width += 1;
+    if (cv.height % 2 !== 0) cv.height += 1;
+  }
   DK = cv.width / cssWidth;
 
   const sc = Math.max(1, Math.sqrt(cssWidth * cssHeight / 220000));
